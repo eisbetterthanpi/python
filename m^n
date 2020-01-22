@@ -1,0 +1,19 @@
+n=m=int(1)
+s=[]
+while m<int(100000):
+    if abs(n**m-m**n)>int(100):
+        n=int(1)
+        m=m+1
+        if m%1000==0: print m//1000,"%"
+    if m**n+2>n**m:
+        n=n+1
+        if n==m:
+            n=n+1
+    if n**m>m**n+2:
+        n=n+1
+        if n==m:
+            n=n+1
+    if n**m==m**n+2:
+        s.append(n**m)
+        n=n+1
+print s

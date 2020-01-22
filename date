@@ -1,0 +1,23 @@
+s=input("day/month/year:").split("/")
+#a=input("day/month/year:")
+#s=a.split("/")
+day,month,year=int(s[0]),int(s[1]),int(s[2])-1900
+#day,month,year=int(input("day:")),int(input("month:")),int(input("year:"))
+key=[1,4,4,0,2,5,0,3,6,1,4,6]
+date=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"]
+print(date[((day+key[month-1]+year+year//4)%7)-1])
+
+
+
+#from datetime import date
+'''
+for x in s:
+    print(x)
+    b.append=int(x)
+'''
+'''
+print(int(a(0)),int(a(1)),int(a(2)))
+'''
+'''
+print(date(2018,9,18).strftime("%A"))
+'''

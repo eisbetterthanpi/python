@@ -1,0 +1,208 @@
+
+#import math
+#print(math.gdc(62,54))
+#trace()
+t = timeit.Timer("with_lambda(a)", "from __main__ import with_lambda,a")
+print("with lambda:", t.timeit())
+#square individual elements
+a=[2,2,3,5,17]
+
+'''
+ans=map(lambda x: x*2,a)
+print(list(ans))
+#print([x*2 for x in a])
+'''
+print(reduce(lambda x,y: x*y,a))
+
+
+'''
+s=int()
+
+#print((lambda a:a for x in range(5))([2,2,3,5,17]))
+
+ans=[2,2,3,5,17]
+a=int(1)
+for s in ans:
+    a*=s
+'''
+
+
+#x=[a*=s for s in ans]
+#a[0]=[a*s for s in ans]
+#a=(lambda a:a*s for s in ans)(1)
+#x=lambda a:
+#print(a)
+
+
+#print((lambda a,b:a+b)(3,4))
+#print(_(3,4))
+'''
+def m(a):
+    
+if __name__ == '__main__':
+    m(a)''
+
+''
+ord()
+chr()
+''
+
+''
+def pow(a,n):
+    return
+x=lambda a:a*2
+print(x(5))
+''
+
+
+''
+s=[x**2 for x in range(5)]
+
+a=''.join(str(x) for x in s)
+print(a)
+''
+
+''
+for x in s:
+    a+=x
+print(a)
+''
+
+''
+class dog:
+    def __init__(self,name,breed,age):
+        self.name=name
+        self.breed=breed
+        self.age=age
+try:
+    #=input()
+    ty=dog("tyler","huskey","4","9")
+except TypeError:
+    print("err")
+else:
+    print(ty.age)
+''
+
+''
+f=open("Internal storage/download/JNEAT/jes/NOTES.txt","r")
+print(f.read())
+f.close()
+''
+
+#print (''
+#(\⏜(\\
+#( •⩊•)
+#/⊃📸⊃
+#'')
+
+
+''
+import random
+n=random.randint(0,100)
+print(f"pick {n}")
+namelist=["renee","rachel","riley"]
+p=random.choice(namelist)
+print(p)
+''
+
+''
+x=5
+class tool():
+    def __init__(self,x,y):
+        self.x=x-1
+        self.y=x//3
+    def sqre(self):
+        return x**2
+print(tool(1,3).sqre())
+''
+
+''
+namelist={"renee","rachel","riley"}
+a,b,c=namelist
+print(a,b,c)
+print(namelist)
+
+''
+
+
+''
+#dictionarios
+t={"j":"k","l":"m"}
+print(t.get("j"))    #prints k
+#print(t.get("j","j"))
+''
+
+''
+x=[6,8,5,7,8]
+for count, val in enumerate(x):
+    print(1)
+''
+
+
+''
+b=39
+h=int(b//9)
+y=int(b%9)
+m=b*3
+print(h,y,m)
+
+p=[7,9,6,8]
+p[3]+=1
+print(p)
+
+
+
+#works after isolating __main__
+from p import p
+print(p(83837))
+''
+
+
+#01234
+#for x in range(5): print(x)
+''
+for x in range(5):
+    for y in range(5):
+        print (x,y)
+
+for x,y in range(5),range(5):
+    print(x,y)
+''
+
+
+
+''
+x=9
+#s=[1,2,[1,2,3],4,5]
+s=list(str(12345))
+s[2]=[1,2,3]
+try:
+    s[2].remove(x)
+except ValueError:
+    pass
+print(type(s[2][1]))
+print(s)
+''
+
+
+
+'' 
+for x in range(65,91): print(chr(x))
+for x in range(97,123): print(chr(x))
+''
+
+
+''
+#[(n//(10**i))%10 for i in range(math.ceil(math.log(n, 10))-1, -1, -1)]
+print(math.log(10,3))
+''
+
+
+''
+#2
+# 2
+s=[1,2,4,6,7,9,4,8,9,5]
+c=s.index(4)
+d=s.count(4)
+print(c,'\n',d)''
+'''

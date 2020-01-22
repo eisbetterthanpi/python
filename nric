@@ -1,0 +1,59 @@
+n=list(input("n*ic:"))
+#c=int(n.index('*')) #for list
+#c=int(n.find('*')) #for str
+c=[count for count, val in enumerate(n) if val =='*']
+'''
+c=[]
+for count, val in enumerate(n):
+    if val == '*':
+        c.append(count)
+'''
+#s=4 if n[0]=='t' or n[0]=='g' else 0
+s=0 if n[0] in ('s','f') else None
+s=4 if n[0] in ('t','g') else s
+
+l=[m.replace('*','0') for m in n]
+#l=list(map(lambda x: str.replace(x,"*",'0'),n))
+#l=list(map(lambda x: x.replace("*",'0'),n))
+
+#a=(int(s)+int(l[1])*2+int(l[2])*7+int(l[3])*6+int(l[4])*5+int(l[5])*4+int(l[6])*3+int(l[7])*2)%11
+t=[1,2,7,6,5,4,3,2]
+a=int(0)
+for k in range(1,8):a+=int(l[k])*t[k]
+
+z=["j","z","i","h","g","f","e","d","c","b","a"] if n[0] in ('s','t') else None
+z=["x","w","u","t","r","q","p","n","m","l","k"] if n[0] in ('f','g') else z
+
+if c[-1]==8: n[8]=z[a%11]
+
+p=list(set(range(1,8)) & set(c))
+if p: 
+    for k in range(10):
+        #print(k)
+        if (a+t[p[0]]*k)%11==int(z.index(n[-1])):
+           n[p[0]]=k
+           break
+#n=[str(x) for x in n]
+n=map(str,n)
+print (''.join(n))
+#''.join(str(e) for e in list1)
+
+
+
+
+
+
+
+
+'''
+#s=int((int(n[1])*2+int(n[2])*7)%11)
+s=int((int(n[1])*2+int(n[2])*7+int(n[3])*6+int(n[4])*5+int(n[5])*4+int(n[6])*3+int(n[7])*2)%11)
+#print(s)
+
+tg+4
+st
+z=["j","z","i","h","g","f","e","d","c","b","a"]
+print (z[s])
+FG
+x=["x","w","u","t","r","q","p","n","m","l","k"]
+'''

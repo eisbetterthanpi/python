@@ -1,0 +1,14 @@
+val=[8,4,5,3]
+wht=[4,3,2,1]
+mx=int(5)
+w=[]
+v=[]
+#wv=[][]
+#a=[][]
+#for v in val: print(v)#val[v])
+for v in range(len(val)):
+    #w.append(wht(val))
+    print(v)
+    
+
+

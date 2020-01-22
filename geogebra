@@ -1,0 +1,26 @@
+
+while input()=!".":
+a=int(input("0)binom pdf 1)binom cdf 2)norm pdf 3)norm cdf 4)inv norm"))
+if a==0:
+    n=m=int(input())
+    p=int(input())
+    r=u=int(input())
+if a==0 or 1:
+    cn=cd=int(1)
+    while u>0:
+        cn=cn*m
+        m=m-1
+        u=u-1
+    while r>1:
+        cd=cd*r
+        r=r-1
+if a==0:
+    t=(cn//cd)*(p**n)*((1-p)**)
+    
+    
+cn//cd
+
+if a==3:
+    sig=int(input('sig'))
+    mu=int(input('mu'))
+    (e^-((x-mu)/sig*(2^.5))^2)/(sig(2*PI)^(.5))

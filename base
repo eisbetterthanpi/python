@@ -1,0 +1,22 @@
+n=str(list(input("number:")))
+b=int(input("base"))
+m=int(input("to"))
+s=[]
+[0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]
+t=j=int(0)
+a=[list(n)]
+e=len(a)-1
+while e!=0:
+    
+    l=t=t+(a[len(a)-e-1]*b**e)
+    e=e-1
+    
+while t//m>0:
+    j=j+1
+    t=t//m
+while j>=0:
+    s.append(l//m**j)
+    l=l-l//m**j
+    j=j-1
+print s,a
+

@@ -1,0 +1,48 @@
+##T1
+'''k=int(input())
+n=int(input())
+a=k+n
+t=c=int(1)
+while a>n:
+    t=a*t
+    a=a-1
+while k>1:
+    c=c*k
+    k=k-1
+print(t//c)'''
+
+
+##T2
+'''n=int(input())
+a=input()
+t=int(0)
+while max(a)>0:
+    a.sort()
+    a[-1]=a[-1]-9
+    a[-2]=a[-2]-3
+    a[-3]=a[-3]-1
+    t=t+1
+print t'''
+
+
+##T3
+n=c=int(input())
+s=input()
+t=l=[]
+while c>0:
+    t.append(0)
+    c=c-1
+p=int(1)
+while p<=n:
+    while j<=n:
+        if s[j+p+(p-1)*n]==("Y"):
+            l.append(j+p)
+        j=j+1
+    m=len(l)
+    t[p]=t[p]+m
+    if m>1:
+        t[l[m]]=t[l[m]]+1
+        m=m-1
+    p=p+1
+    l=[]
+print(max(t))

@@ -1,0 +1,100 @@
+#701009500600005000000060001900000800300000005000900104000000010000200300200090040
+'''
+#s=input("s:")
+s=701009500600005000000060001900000800300000005000900104000000010000200300200090040
+#s=[[[[1111+1000*a + 100*b + 10*c +d for a in range(3)] for b in range(3)] for c in range(3)] for d in range(3)]
+#print(s)
+a=list(s)
+b=[for x in a: if x==0: b[x]=[1,2,3,4,5,6,7,8,9]]
+print(b)
+'''
+#s=701009500600005000000060001900000800300000005500900104000000010000200300200090040
+s=530070000600195000098000060800060003400803001700020006060000280000419005000080079
+#n=list("etm20*93")
+#n=list(s)
+n=[int(n) for n in list(str(s))]
+#n=[(n//(10**i))%10 for i in range(math.ceil(math.log(n, 10))-1, -1, -1)]
+#c=[count for count, val in enumerate(n) if val =='*']
+
+#c=n    #both list change
+c=n.copy()
+#c[count]=[1,2,3] for count, val in enumerate(n) if val ==0
+
+for count, val in enumerate(c):
+    if val ==0:
+        c[count]=[1,2,3,4,5,6,7,8,9]
+for a in range(100):
+    for b,x in enumerate(c):
+        if isinstance(x,int):
+            h=int(b//9)
+            y=int(b%9)
+            for i in range(9):
+                if isinstance(c[9*h +int(i)],list):
+                    try:
+                        c[9*h +int(i)].remove(x)
+                    except ValueError:
+                        pass
+                if isinstance(c[y+9*i],list):
+                    try:
+                        c[y+9*i].remove(x)
+                    except ValueError:
+                        pass
+            for j in range(3):
+                for k in range(3):
+                    if isinstance(c[(27*(h//3)+3*(y//3)+9*j+k)],list):
+                        try:
+                            c[(27*(h//3)+3*(y//3)+9*j+k)].remove(x)
+                        except ValueError:
+                            pass
+        if isinstance(x,list):
+            if len(x)==1:
+                c[b]=c[b][0]
+                #print ans step
+
+    for b,x in enumerate(c):
+        if isinstance(x,list):
+            h=int(b//9)
+            y=int(b%9)
+            for count,val in enumerate(x):
+                rec=0
+                for i in range(9):
+                    if isinstance(c[9*h +int(i)],list):
+                        if c[9*h +int(i)].count(val)>0:
+                            rec+=1
+                if rec==1:
+                    c[b]=val
+                rec=0
+                for i in range(9):
+                    if isinstance(c[y+9*i],list):
+                        if c[y+9*i].count(val)>0:
+                            rec+=1
+                if rec==1:
+                    c[b]=val
+                rec=0
+                for j in range(3):
+                    for k in range(3):
+                        if isinstance(c[(27*(h//3)+3*(y//3)+9*j+k)],list):
+                            if c[(27*(h//3)+3*(y//3)+9*j+k)].count(val)>0:
+                                rec+=1
+                if rec==1:
+                    c[b]=val
+                rec=0
+                
+#print(c)
+line=str(c)
+line2=line.replace(', ','')
+
+ans=''.join(str(x) for x in c)
+#re.sub(r'\s' , '\n', line)
+print(ans)
+
+#c[4]=[1,2,3]
+
+#print(n, '\n' ,c)
+#print(c,'\n' ,len(c))
+#c=[c for c, x in a if c==0]
+#c=[count for count, val in enumerate(n) if val =='*']
+
+#print(s[0][0][0][1])
+
+

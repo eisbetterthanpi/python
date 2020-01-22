@@ -1,0 +1,122 @@
+
+#p,q=int(61),int(53)
+def lcm(p,q):
+    '''
+    from p import p as prime
+    sp,sq=prime(p),prime(q)
+    #return sp,sq,sq+[a for a in sp if a not in sq]
+    ans=sq+[a for a in sp if a not in sq]
+    s=int(1)
+    for a in ans:
+        s*=a
+    return s
+    '''
+    #or just
+    import math
+    return p*q/math.gcd(p,q)
+    
+    
+    
+#Carmichael's totient function
+
+
+
+def gcd(p,q):
+    '''
+    from p import p as prime
+    sp,sq=prime(p),prime(q)
+    #return sp,sq,sq+[a for a in sp if a not in sq]
+    ans=[a for a in sp if a in sq]
+    s=int(1)
+    for a in ans:
+        s*=a
+    return s
+    '''
+    #or just
+    import math
+    return math.gcd(p,q)
+
+
+
+
+#modular multiplicative inverse
+#d?*e=1mod(a)
+#413*17=1mod(780)
+
+#a=int(870)
+#e=int(17)
+def mmi(a,e):
+    k=int(a//e+1)
+    b=k*e-a
+    #print(k,b)
+    t=int(b)
+    for c in range(1,e):
+        
+        if t%e==1:
+            o=int(t//e)
+            break
+        t+=b
+        #print(b,c,t%e)
+    d=k*(c)-o
+    #break
+    return d#,' * ',e,' = 1 (mod ',a,')',(d*e,a*c,(d*e)-(a*c),((d*e)-(a*c))//e,((d*e)-(a*c))%e)
+
+#print(d,' * ',e,' = 1 (mod ',a,')')
+#print(d*e,a*c,(d*e)-(a*c),((d*e)-(a*c))//e,((d*e)-(a*c))%e)
+#print(a//e,a%e)
+
+
+#Extended Euclidean algorithm
+#eea(240,46,2)
+def eea(a,e,r): #r as gcd
+    s=[]
+    n=int(0)
+    difp=e
+    diff=int(a%difp)
+    s+=[1,-int(diff//e)]
+    
+    while diff!=r:
+        c=int(difp//diff)
+        s+=[s[n-1][0],c*s[n-1][1]]
+        s[n]
+        difp=diff
+        diff%=e
+        
+        n+=1
+    return s[-1]
+
+
+
+
+#encryption
+def c(m):
+    return m**e%n
+
+#decryption
+#private keys d,n=413,3233
+def m(c):
+    return c**d%n
+
+if __name__ == '__main__':
+    #print(gcd(26,374))
+    
+    print(eea(240,46,2))
+    
+    
+    
+    '''
+    p,q=61,53
+    n,e=p*q,17 #public key
+    
+    a=lcm(p-1,q-1)
+    d=mmi(a,e)
+    message=2840
+    crypt=c(message)
+    dcode=m(crypt)
+    print(crypt,dcode)
+    '''
+    
+
+
+
+

@@ -1,0 +1,17 @@
+n=int(input("number:"))
+s=[]
+p=[2]
+x=int(2)
+a=int(0)
+while p[-1]<=(n**(0.5)):
+    while a<=len(p)-1:
+        if x%p[-1]!=0:
+            p.append(x)
+            if n%p[-1]==0:
+                s.append(p[-1])
+                n=n//[p-1]
+            x+=1
+        a+=1
+s.append(n)
+if len(s)==1: print("prime")
+else: print (s)

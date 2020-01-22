@@ -1,0 +1,8 @@
+p=float(input("probability:"))
+n=int(input("num row:"))
+t=int(0)
+m=int(1)
+while m<n:
+    t=t+((p**(m-1))*(1-p)*m)
+    m=m+1
+print(t+(p**n)*p)

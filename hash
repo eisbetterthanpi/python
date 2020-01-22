@@ -1,0 +1,10 @@
+n=int(input("number:"))
+s=[]
+f=int()
+for f in range(2,int(abs(n**(0.5))+1)):
+    while n%f==0:
+        s.append(f)
+        n=n//f
+        continue
+if len(s)==0: print("prime")
+else: s.append(n),print(s)

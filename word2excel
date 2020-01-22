@@ -1,0 +1,5 @@
+line=str(input("word string:"))
+#line2=line.replace(' ', '\n')
+line2=line.replace(', ','')
+#re.sub(r'\s' , '\n', line)
+print(line2)

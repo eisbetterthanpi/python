@@ -1,8 +1,11 @@
 
+'''
+#og lcm
 #p,q=int(61),int(53)
 def lcm(p,q):
-    '''
-    from p import p as prime
+    
+    #from p import p as prime
+    from p import p24 as prime
     sp,sq=prime(p),prime(q)
     #return sp,sq,sq+[a for a in sp if a not in sq]
     ans=sq+[a for a in sp if a not in sq]
@@ -10,20 +13,27 @@ def lcm(p,q):
     for a in ans:
         s*=a
     return s
-    '''
+    
     #or just
     import math
     return p*q/math.gcd(p,q)
-    
-    
-    
+'''
+#lcm made repeatable
+def lcm(p,*q):
+    import math
+    for x in q:
+        p=p*x//math.gcd(p,x)
+    return p
+
 #Carmichael's totient function
 
 
-
+'''
+#og gcd
 def gcd(p,q):
-    '''
-    from p import p as prime
+    
+    #from p import p as prime
+    from p import p24 as prime
     sp,sq=prime(p),prime(q)
     #return sp,sq,sq+[a for a in sp if a not in sq]
     ans=[a for a in sp if a in sq]
@@ -31,13 +41,17 @@ def gcd(p,q):
     for a in ans:
         s*=a
     return s
-    '''
+    
     #or just
     import math
     return math.gcd(p,q)
-
-
-
+'''
+#gcd made repeatable
+def gcd(b,*a):
+    import math
+    for x in a:
+        b=math.gcd(b,x)
+    return b
 
 #modular multiplicative inverse
 #d?*e=1mod(a)
@@ -67,22 +81,35 @@ def mmi(a,e):
 
 
 #Extended Euclidean algorithm
-#eea(240,46,2)
+#eea(17,780,1)
+#413*17-9*780=1    413*17=1mod(780)
 def eea(a,e,r): #r as gcd
-    s=[]
-    n=int(0)
-    difp=e
-    diff=int(a%difp)
-    s+=[1,-int(diff//e)]
-    
-    while diff!=r:
-        c=int(difp//diff)
-        s+=[s[n-1][0],c*s[n-1][1]]
-        s[n]
-        difp=diff
-        diff%=e
-        
+    s=[[1,0],[0,1]]
+    n=int(1)
+    difp,diff=a,e
+    rem=int(difp%diff)
+    #while rem!=r or s[-1][0] <0:
+    for x in range(30):
+        #print(rem,s[-1][0 if a>e else 1])
+        if rem==r and s[-1][0]>0: break
         n+=1
+        #c=int(difp//diff)
+        c=int((difp-1)//diff)
+        #print(difp,diff,c)
+        #print(rem,s)
+        #rem=int(difp%diff)
+        rem=int((difp-1)%diff+1)
+        s+=[[s[n-2][0]-c*s[n-1][0],s[n-2][1]-c*s[n-1][1]]]
+        #print(rem,s[n])
+        
+        if r!=1 and rem==1:
+            print('dig')
+            s[-1]=[r*x for x in s[-2]]
+            rem=r
+            break
+        difp=diff
+        diff=rem
+    #print(rem,s)
     return s[-1]
 
 
@@ -98,10 +125,20 @@ def m(c):
     return c**d%n
 
 if __name__ == '__main__':
-    #print(gcd(26,374))
     
-    print(eea(240,46,2))
-    
+    import time
+    start=time.time()
+    i=lcm(49,18,56)
+    from p import p24 as prime
+    print(i,prime(i))
+    #print(gcd(420,120,2000,360))
+    #print(eea(17,11,2))
+    #eea(240,46,2)
+    #print(eea(46,240,2))
+    #print(eea(240,46,2))
+    #print(eea(780,17,1))#8*780=367*17+1
+    #print(eea(17,780,1))413*17=9*780+1
+    #print(mmi(780,17))
     
     
     '''
@@ -109,13 +146,15 @@ if __name__ == '__main__':
     n,e=p*q,17 #public key
     
     a=lcm(p-1,q-1)
-    d=mmi(a,e)
+    #d=mmi(a,e)
+    d=eea(e,a,1)[0]
     message=2840
     crypt=c(message)
     dcode=m(crypt)
     print(crypt,dcode)
-    '''
     
+    print(time.time()-start)
+    '''
 
 
 

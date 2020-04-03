@@ -1,0 +1,27 @@
+
+
+
+#eea(17,780,1)
+#413*17-9*780=1    413*17=1mod(780)
+#def eea(a,e,r):
+#0mod3 3mod4 4mod5
+#(0,3,3,4,4,5)
+def crt(*s):
+    from rsa import eea
+    print(type(s),s)
+    s=list(s)
+    a,m=s[0],s[1]
+    print(type(a),type(s[3]))
+    for x in range(2,len(s)-1,2):
+        print(x,s[x],s[x+1],len(s))
+        print('ht',m,s[x+1],int(a)+int(s[x]))
+        a=eea(m,s[x+1],a-s[x])
+        m*=s[x+1]
+    return a, " mod ",m
+if __name__ == '__main__':
+    #input("a,mod,b,mod,...")
+    #s=(0,3,3,4,4,5)
+    #s=[0,3,3,4,4,5]
+    print(crt(0,3,3,4,4,5))
+
+

@@ -55,6 +55,7 @@ def p24(n):
             break
     
     while f<=(n**(0.5)):
+    #for r in range(5,n**(0.5)+1,int(2+(f+1)%3))
         #print(f,2+(f+1)%3)
         if n%f==0:
             s.append(f)
@@ -69,6 +70,29 @@ def p24(n):
 
 
 def pls(n):
+    #n=int(19483738)
+    s=[]
+    p=[2]#,3,5,7,11]
+    x=int(2)
+    while p[-1]<=(n**(0.5)):
+        while n%p[-1]==0:
+            s.append(p[-1])
+            #s+=p[-1]
+            n=n//p[-1]
+        for a in p:
+            if x%a==0:
+                x+=1
+        p+=[x]
+        x+=1
+    
+    s.append(n)
+    if len(s)==1: return "prime"
+    else: return s
+    #print(p)
+
+
+
+def pgen(n):
     #n=int(19483738)
     s=[]
     p=[2]#,3,5,7,11]

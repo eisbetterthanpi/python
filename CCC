@@ -7,4 +7,4 @@ while t<=m:
     n=t
     a.append(len(s))
     t=t+1
-print a
+print(a)

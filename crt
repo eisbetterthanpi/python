@@ -1,27 +1,35 @@
 
 
-
-#eea(17,780,1)
-#413*17-9*780=1    413*17=1mod(780)
-#def eea(a,e,r):
+#crt(0,3,3,4,4,5)
 #0mod3 3mod4 4mod5
-#(0,3,3,4,4,5)
+#0mod3 3mod4 ; eea(3,4,3) return 1 -> 1*3+0 mod 3*4 = 3mod12
+#3mod12 4mod5 ; eea(12,5,1) return 3 -> 3*12+3 mod 12*5 = 39mod60
+#(39,60) #tuple
+
 def crt(*s):
     from rsa import eea
-    print(type(s),s)
     s=list(s)
     a,m=s[0],s[1]
-    print(type(a),type(s[3]))
-    for x in range(2,len(s)-1,2):
-        print(x,s[x],s[x+1],len(s))
-        print('ht',m,s[x+1],int(a)+int(s[x]))
-        a=eea(m,s[x+1],a-s[x])
+    for x in range(2,len(s),2):
+        #print(x)
+        #print(eea(m,s[x+1],s[x]-a))
+        #print(m,s[x+1],s[x]-a)
+        a=eea(m,s[x+1],s[x]-a)[0]*m+a
         m*=s[x+1]
-    return a, " mod ",m
+        #print(a,m)
+    return [a,m]
+
+
 if __name__ == '__main__':
     #input("a,mod,b,mod,...")
-    #s=(0,3,3,4,4,5)
-    #s=[0,3,3,4,4,5]
-    print(crt(0,3,3,4,4,5))
+    #s=(0,3,3,4,4,5) 
+    s=[0,3,3,4,4,5] #dun work, cannot imput list/tuple
+    #print(crt(s))
+    
+    #print(crt(0,3,3,4,4,5))
+    print(crt(2,3,4,5,3,7))
+    #14m15
+    #m105
+
 
 

@@ -1,8 +1,6 @@
 
 
 
-
-
 '''
 #og lcm
 #p,q=int(61),int(53)
@@ -84,62 +82,55 @@ def mmi(a,e):
 #print(a//e,a%e)
 
 
+
 #Extended Euclidean algorithm
 #eea(17,780,1)
 #413*17-9*780=1    413*17=1mod(780)     [413,-9]
-def eea(a,e,r): #r as gcd
+def eea(a,e,r):
     import math
-    if r%math.gcd(a,e)>0:
+    gcd=math.gcd(a,e)
+    if r%gcd>0:
         #print("error, r can't be achieved from gcd")
         return "error, r can't be achieved from gcd"
+    #if gcd in [a,e]: return "error, a/e=gcd"
     s=[[1,0],[0,1]]
     n=int(1)
     difp,diff=a,e
-    rem=int(difp%diff)
+    #rem=int(difp%diff)
     #while rem!=r or s[-1][0] <0:
     for x in range(30):
         #print(rem,s[-1][0 if a>e else 1])
-        if rem==r and s[-1][0]>0: break
-        n+=1
-        print('d',difp,diff)
         c=int(difp//diff)
-        #c=int((difp-1)//diff)
-        #print('c',difp,diff,c)
-        #print('rem',rem,s)
         rem=int(difp%diff)
-        #rem=int((difp-1)%diff+1)
-        s+=[[s[n-2][0]-c*s[n-1][0],s[n-2][1]-c*s[n-1][1]]]
-        print(rem,s[-1])
+        #print('ddcrem',difp,diff,c,rem)
         
-        if r!=1 and rem==1:
-            print('dig')
-            #s[-1]=[r*x for x in s[-2]] #suck, wht old mat
-            s.append([r*x for x in s[-1]])
-            rem=r
-            #print(s)
-            #from numpy import sign as sg
-            while s[-1][0] not in range(e):
-                #sign=sg(s[-1][0])
-                #sign=int(s[-1][0]/abs(s[-1][0]))
-                #print(sign)
-                #s+=[[s[-1][0]-(s[-1][0]//e)*sign*e,s[-1][1]+(s[-1][0]//e)*sign*a]]
-                s+=[[s[-1][0]-(s[-1][0]//e)*e,s[-1][1]+(s[-1][0]//e)*a]]
-                #print(s[-1][0]//e)
-                #print(s[-1])
-                
-            break
+        n+=1
+        s+=[[s[n-2][0]-c*s[n-1][0],s[n-2][1]-c*s[n-1][1]]]
+        #print(rem,s[-1])
         difp=diff
         diff=rem
-        #if x>=30: print("overflow")
         
+        if rem==r:
+            #print('final')
+            if s[-1][0]<0:
+                s+=[[s[-1][0]+e//gcd,s[-1][1]-a//gcd]]
+            break
+
+        #else:
+        if rem==gcd:
+            #print('hammer',s[-1],e)
+            s+=[[s[-1][0]*(r//rem),s[-1][1]*(r//rem)]]
+            rem=r
+            #print(s[-1],range(e//gcd))
+            if s[-1][0] not in range(e//gcd):
+                #print('f',(s[-1][0]//(e//gcd)),(s[-1][0]//(e//gcd)))
+                s+=[[s[-1][0]-(s[-1][0]//(e//gcd))*(e//gcd),s[-1][1]+(s[-1][0]//(e//gcd))*(a//gcd)]]
+                #print(s[-1])
+            break
+
     #print(rem,s)
-    #return s
-    #print(a,e,r, "\n", s[-1][0],'*',a,'+',s[-1][1],'*',e,'=',s[-1][0]*a+s[-1][1]*e)
     if s[-1][0]*a+s[-1][1]*e !=r:print("rong")
     return s[-1]
-
-
-
 
 #encryption
 def c(m):
@@ -162,17 +153,20 @@ if __name__ == '__main__':
     #print(eea(17,42,-1))
     #print(eea(4,5,-2))
     #print(eea(5,4,-2))
-    #print(eea(7,17,-2)) #[5,-2] 5*7=2*17+1
-    #print(eea(17,7,-2)) #[-2,5]
+    #print(eea(7,17,-2)) #[5,-2] 5*7-2*17=1
+    #print(eea(17,7,-2)) #[-2,5]? [4,-10] 4*17-10*7=-2
     
     
     #eea(240,46,2)
-    #print(eea(46,240,2))#47*46-9*240=2 2160 #[47,-9] 
-    #print(eea(240,46,2))#14*240-73*46=2 3360 #[14,-73]
-    print(eea(780,17,1))#8*780-367*17=1 #[8,-367]
-    print(eea(17,780,1))#413*17-9*780=1 #[413,-9]
+    #print(eea(46,240,8))#47*46-9*240=2 2160 #[47,-9] 46,240,8 [68,-13]
+    #2 [47,-9] [-73,14] 120,-23
+    #188,-36 68,-13
+    #[47,-9] [92,-20] 45,-11
+    print(eea(240,46,2))#14*240-73*46=2 3360 #[14,-73] 37 -193
+    #print(eea(780,17,1))#8*780-367*17=1 #[8,-367]
+    #print(eea(17,780,1))#413*17-9*780=1 #[413,-9]
     #print(mmi(780,17)) #413
-    '''
+    
     #print(eea(15,7,-11)) #[3,-8]
     #print(eea(7,15,-11)) #[7,-4]
     #print(eea(21,15.5,-11)) #tester
@@ -180,8 +174,9 @@ if __name__ == '__main__':
     #14mod15 3mod7
     
     #print(eea(7,16,-26)) #[10,-6]
+
     
-    
+    '''
     p,q=61,53
     n,e=p*q,17 #public key
     
@@ -194,14 +189,9 @@ if __name__ == '__main__':
     crypt=c(message)
     dcode=m(crypt)
     print(crypt,dcode)
-    
-    #print(time.time()-start)
     '''
-
-
-
-
-
+    #print(time.time()-start)
+    
 
 
 

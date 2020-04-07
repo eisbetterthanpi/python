@@ -23,11 +23,13 @@ def crt(*s):
 if __name__ == '__main__':
     #input("a,mod,b,mod,...")
     #s=(0,3,3,4,4,5) 
-    s=[0,3,3,4,4,5] #dun work, cannot imput list/tuple
+    #s=[0,3,3,4,4,5] #dun work, cannot imput list/tuple
     #print(crt(s))
     
     #print(crt(0,3,3,4,4,5))
-    print(crt(2,3,4,5,3,7))
+    #print(crt(2,3,4,5,3,7))
+    ans=crt(2,3,4,5,3,7)
+    print(ans[0],"mod",ans[1])
     #14m15
     #m105
 

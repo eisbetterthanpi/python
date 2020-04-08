@@ -1,0 +1,55 @@
+
+'''
+#og lcm
+#p,q=int(61),int(53)
+def lcm(p,q):
+    
+    #from p import p as prime
+    from p import p24 as prime
+    sp,sq=prime(p),prime(q)
+    #return sp,sq,sq+[a for a in sp if a not in sq]
+    ans=sq+[a for a in sp if a not in sq]
+    s=int(1)
+    for a in ans:
+        s*=a
+    return s
+    
+    #or just
+    import math
+    return p*q/math.gcd(p,q)
+'''
+#lcm made repeatable
+def lcm(p,*q):
+    import math
+    for x in q:
+        p=p*x//math.gcd(p,x)
+    return p
+
+#Carmichael's totient function
+
+
+'''
+#og gcd
+def gcd(p,q):
+    
+    #from p import p as prime
+    from p import p24 as prime
+    sp,sq=prime(p),prime(q)
+    #return sp,sq,sq+[a for a in sp if a not in sq]
+    ans=[a for a in sp if a in sq]
+    s=int(1)
+    for a in ans:
+        s*=a
+    return s
+    
+    #or just
+    import math
+    return math.gcd(p,q)
+'''
+#gcd made repeatable
+def gcd(b,*a):
+    import math
+    for x in a:
+        b=math.gcd(b,x)
+    return b
+

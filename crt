@@ -7,7 +7,7 @@
 #(39,60) #tuple
 
 def crt(*s):
-    from rsa import eea
+    from eea import eea
     s=list(s)
     a,m=s[0],s[1]
     for x in range(2,len(s),2):

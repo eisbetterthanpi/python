@@ -172,24 +172,23 @@ if __name__ == '__main__':
     #print(eea(21,15.5,-11)) #tester
     #print(eea(17,780,1))
     #14mod15 3mod7
-    
+    #print(eea(35,10,10)) #does kind of a loop
     #print(eea(7,16,-26)) #[10,-6]
 
     
-    '''
     p,q=61,53
     n,e=p*q,17 #public key
     
     a=lcm(p-1,q-1)
-    #d=mmi(a,e)
-    print(e,a)
-    print(eea(17,780,1))
-    d=eea(e,a,1)[0]
+    d=mmi(a,e)
+    #print(e,a)
+    #print(eea(17,780,1))
+    #d=eea(e,a,1)[0]
     message=2840
     crypt=c(message)
     dcode=m(crypt)
     print(crypt,dcode)
-    '''
+    
     #print(time.time()-start)
     
 

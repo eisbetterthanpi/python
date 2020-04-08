@@ -1,0 +1,93 @@
+
+#Extended Euclidean algorithm
+#eea(17,780,1)
+#413*17-9*780=1    413*17=1mod(780)     [413,-9]
+def eea(a,e,r):
+    import math
+    gcd=math.gcd(a,e)
+    if r%gcd>0:
+        #print("error, r can't be achieved from gcd")
+        return "error, r can't be achieved from gcd"
+    #if gcd in [a,e]: return "error, a/e=gcd"
+    s=[[1,0],[0,1]]
+    n=int(1)
+    difp,diff=a,e
+    #rem=int(difp%diff)
+    #while rem!=r or s[-1][0] <0:
+    for x in range(30):
+        #print(rem,s[-1][0 if a>e else 1])
+        c=int(difp//diff)
+        rem=int(difp%diff)
+        #print('ddcrem',difp,diff,c,rem)
+        
+        n+=1
+        s+=[[s[n-2][0]-c*s[n-1][0],s[n-2][1]-c*s[n-1][1]]]
+        #print(rem,s[-1])
+        difp=diff
+        diff=rem
+        
+        if rem==r:
+            #print('final')
+            if s[-1][0]<0:
+                s+=[[s[-1][0]+e//gcd,s[-1][1]-a//gcd]]
+            break
+
+        #else:
+        if rem==gcd:
+            #print('hammer',s[-1],e)
+            s+=[[s[-1][0]*(r//rem),s[-1][1]*(r//rem)]]
+            rem=r
+            #print(s[-1],range(e//gcd))
+            if s[-1][0] not in range(e//gcd):
+                #print('f',(s[-1][0]//(e//gcd)),(s[-1][0]//(e//gcd)))
+                s+=[[s[-1][0]-(s[-1][0]//(e//gcd))*(e//gcd),s[-1][1]+(s[-1][0]//(e//gcd))*(a//gcd)]]
+                #print(s[-1])
+            break
+
+    #print(rem,s)
+    if s[-1][0]*a+s[-1][1]*e !=r:print("rong")
+    return s[-1]
+
+#print(d,' * ',e,' = 1 (mod ',a,')')
+#print(d*e,a*c,(d*e)-(a*c),((d*e)-(a*c))//e,((d*e)-(a*c))%e)
+#print(a//e,a%e)
+
+
+
+if __name__ == '__main__':
+    
+    #import time
+    #start=time.time()
+
+    #lcm gcd function works with multiple arguments
+    #print(lcm(49,18,56))
+    
+    #print(eea(42,17,7))
+    #print(eea(17,42,-1))
+    #print(eea(4,5,-2))
+    #print(eea(5,4,-2))
+    #print(eea(7,17,-2)) #[5,-2] 5*7-2*17=1
+    #print(eea(17,7,-2)) #[-2,5]? [4,-10] 4*17-10*7=-2
+    
+    
+    #eea(240,46,2)
+    #print(eea(46,240,8))#47*46-9*240=2 2160 #[47,-9] 46,240,8 [68,-13]
+    #2 [47,-9] [-73,14] 120,-23
+    #188,-36 68,-13
+    #[47,-9] [92,-20] 45,-11
+    #print(eea(240,46,2))#14*240-73*46=2 3360 #[14,-73] 37 -193
+    #print(eea(780,17,1))#8*780-367*17=1 #[8,-367]
+    #print(eea(17,780,1))#413*17-9*780=1 #[413,-9]
+    #print(mmi(780,17)) #413
+    
+    #print(eea(15,7,-11)) #[3,-8]
+    #print(eea(7,15,-11)) #[7,-4]
+    #print(eea(21,15.5,-11)) #tester
+    #print(eea(17,780,1))
+    #14mod15 3mod7
+    print(eea(35,10,10)) #does kind of a loop
+    #print(eea(7,16,-26)) #[10,-6]
+
+    
+    #print(time.time()-start)
+    

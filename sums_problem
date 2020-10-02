@@ -1,0 +1,22 @@
+def sums(list,target):
+    if target in list:
+        return [list.index(target)]
+
+    ans,list_sorted=[],[]
+    for i,v in enumerate(list):
+        ans+=[[[i+1],v]] #list of indexes used, value of sum
+        list_sorted+=[[i+1,v]]
+    list_sorted=sorted(list_sorted,key=lambda l:l[1], reverse=True) #[index,value] sorted by value
+
+    for y in list_sorted:
+        for val in ans:
+            if not y[0] in val[0]: #make sure index have not been used
+                if val[1]+y[1]==target: #target achieved, done!
+                    return sorted(val[0]+[y[0]])
+                elif val[1]+y[1]<target: #add new possible sum to memory
+                    ans+=[[val[0]+[y[0]],val[1]+y[1]]]
+
+l,t=[1,2,6,3,17,82,23,234],26    #[3,6] 47?
+l,t=[1,2,6,3,17,82,23,234],40    #[4,6] 57?
+l,t=[1,2,6,3,17,82,23,234],23    #[6]
+print(sums(l,t))

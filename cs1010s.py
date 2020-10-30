@@ -582,6 +582,79 @@ print(s)
 
 
 
+def shift_left(num, n):
+    if n==0: return int(num)
+    num=str(num)
+    n=n%len(num)
+    num=num[1:]+num[0]
+    # num=num[-1]+num[:-1]
+    return shift_left(num, n-1)
+
+def shift_left_alt(num, n):
+    num=str(num)
+    n=n%len(num)
+    num=num[n::]+num[0:n]
+    # num=num[-n:]+num[:-n]
+    return int(num)
+
+# print(shift_left(12345,-1))
+print(shift_left_alt(12345,3))
+
+
+def mth_digit(n, num):
+    print(len(str(num)))
+    if len(str(num))==n: return num%10
+    return int(mth_digit(n, num//10))
+print(mth_digit(4, 12345))
+
+def mth_digit(n, num):
+    if n>len(str(num)): return None
+    return int(str(num)[n-1])
+
+
+def divisible_by_11(num):
+    if num in(0,11):
+        print("0",num)
+        return True
+    if 0<num and num<11:
+        print("out",num)
+        return False
+    num=str(num)
+    a=1
+    b=1
+    # print(num[0::2])
+    for x in num[0::2]: a+=int(x)
+    for x in num[1::2]: b+=int(x)
+    print(a,b)
+    return int(divisible_by_11(abs(a-b)))
+
+
+def count_change(tt, ck):
+    c=(1,5,10,20,50,100)
+    d=(0,1,3,6,15,30)
+    e=(1,2,4,10,57,315)
+    n=tt
+    s=tuple()
+    ans=0
+    for x in range(ck):
+        ans+=(n//c[ck-x])*e[ck-x]
+        print(x,(n//c[ck-x]),e[ck-x])
+        s=s+(n//c[ck-x],)
+        n=n%c[ck-x]
+    print(n,s,ans)
+    # return ans
+
+count_change(120,5)
+
+
+
+
+
+
+
+
+
+
 
 
 

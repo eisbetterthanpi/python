@@ -648,7 +648,16 @@ count_change(120,5)
 
 
 
-
+def copy_tree(t):
+    ans=tuple()
+    for x in t:
+        if type(x)==tuple:
+            # ans=ans+(copy_tree(x),)#(x,)
+            ans=ans+(copy_tree(x),)+tuple()
+        else:
+            ans=ans+(x,)+tuple()
+        # ans=ans+tuple(x)
+    return ans+tuple()
 
 
 

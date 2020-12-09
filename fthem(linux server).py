@@ -11,7 +11,7 @@ driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,
                          options=chrome_options  #chrome_options=chrome_options
                          )
 temp = random.randint(363, 365)/10
-username="nusstu\\\E1234567"
+username="nusstu\\\E1234567"  #need 3 back slashes!
 password="Passw0rd"
 #driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 driver.get('https://myaces.nus.edu.sg/htd/');

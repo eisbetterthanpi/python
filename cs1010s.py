@@ -10,13 +10,9 @@ print(test_leap_year(1000))
 
 
 
-
 i=-12
 print(len("%i" % abs(i)))
 return len("%i" % i)
-
-
-
 
 
 def bsum(*a):
@@ -658,6 +654,102 @@ def copy_tree(t):
             ans=ans+(x,)+tuple()
         # ans=ans+tuple(x)
     return ans+tuple()
+
+
+
+def test_prime(n):
+    if n<= 1:
+        return False
+    if n== 2:
+        return True
+    if n%2 == 0:
+        return False
+    for i in range(3, round(n**(1/2))+1,2):
+        if n%i == 0:
+            return False
+    return True
+print(prime(34))
+
+
+
+# consolidated midterms
+a = 2
+b = a**2 + a
+c = b//a + b%a
+if c%b > a:
+    print("Higher")
+elif c%b < a:
+    print("Lower")
+else:
+    print("Same same!")
+print(a,b,c,c%b)
+
+print(6%3)
+c,b=6,3
+print(c%b)
+
+def x(y):
+    def y(z):
+        x = lambda x: x**2
+        y = lambda x: x+2
+        def z(x):
+            return x(5)
+        return z(y)
+    return y(x)
+# print(x(lambda x: x+1))
+print(x(87))
+
+result = 8
+for i in range(10,5,-1):
+    result = result**2 % i
+    if result%2 == 1:
+        result = 2*result
+print(result)
+
+
+i, count = 3,0
+while i != 1:
+    if i%2==1:
+        i = 3*i+1
+    else:
+        i = i//2
+    print("if",count,i)
+    if count > i:
+        print(i,count)
+        break
+    count += 1
+print(count)
+
+def twice(f):
+    return lambda x: f(f(x))
+print(twice(twice)(twice(lambda x: x+3))(2)) #26    8
+print(twice(twice)(twice)(lambda x: x+3)(2)) #50    16
+
+
+def twice(f):
+    return lambda x: f(f(x))
+print(twice(twice)(twice(lambda x: x+1))(0)) # 8    2*2^2
+print(twice(twice)(twice)(lambda x: x+1)(0)) # 16   2^2^2
+print(twice(twice(twice))(lambda x: x+1)(0))
+
+def thrice(f):
+    return lambda x: f(f(f(x)))
+print(thrice(thrice(lambda x: x+1))(0)) # *3 *3
+print(thrice(thrice)(lambda x: x+1)(0)) # (*3)(*3)(*3)    *3^3
+
+print(thrice(thrice)(thrice(lambda x: x+1))(0)) # 8    2*2^2
+print(thrice(thrice)(thrice)(lambda x: x+1)(0)) # 16   2^2^2
+print(thrice(thrice(thrice))(lambda x: x+1)(0))
+
+
+s=(1,3,5,2)
+f= lambda x,y:x+y
+# print(f(s))
+# print(map(f,s))
+print([map(f,x) for x in s])
+print(reduce(lambda x, y:x+y, s)) #reduce is not in python 3.7
+print(reduce(f,s,0))
+# print(sum(s))
 
 
 

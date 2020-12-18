@@ -753,6 +753,421 @@ print(reduce(f,s,0))
 
 
 
+def poly(c, x):
+    # c[]
+    # a=1
+    def term(a):
+        return c[a] * (x ** a)
+    return sum(term, 1, 0, len(c))
+    # return sum(term, x, next, 0)
+
+def fill_row(b):
+    at=False
+    for x in b:
+        if x.count(0)==1:
+            at=True
+            x[x.index(0)]=10-sum(x)
+    return at
+
+def fill_col(b):
+    at=False
+    for x in range(4):
+        k=[g[x] for g in b]
+        if k.count(0)==1:
+            at=True
+            b[k.index(0)][x]=10-sum(k)
+    return at
+
+def fill_section(b):
+    at=False
+    for t in range(4):
+        x=[b[2*(t%2)+(i%2)][2*(t//2)+i//2] for i in range(4)]
+        if x.count(0)==1:
+            at=True
+            b[2*(t%2)+(x.index(0)%2)][2*(t//2)+x.index(0)//2]=10-sum(x)
+    return at
+
+
+
+def rabbit(r):
+    r=(0,)+r
+    ck=[r[w+1]-r[w] for w in range(len(r)-1)]
+    print(ck,any(i > 50 for i in ck))
+    if any(i > 50 for i in ck): return -1
+    ans=0
+    c=0
+    d=1
+    # for x in r:
+    for x in range(len(r)):
+        # while
+        # r[c:]
+        print(x,r[x],r[c],r[x]-r[c])
+        if r[x]-r[c]>50:
+            c=x-1
+            print("c",c)
+            ans+=1
+            continue
+        # d+=1
+        # c=x
+    return ans+1
+
+# print(rabbit((32, 46, 70, 85, 96, 123, 145)))
+# print(rabbit((40, 70, 150, 160, 180)))
+print(rabbit((50, 51, 101, 102, 152, 153, 203, 204, 254, 255, 305, 306, 356, 357, 407)))
+
+
+
+def cache(st):
+    ans=0
+    a=[]
+    for x in st:
+        print(x,a,x in a)
+        if x in a:
+            a.remove(x)
+            a+=[x]
+            ans+=20
+        else:
+            a+=[x]
+            ans+=100
+            if len(a)>8:
+                a.pop(0)
+                print(a)
+    return ans
+
+print(cache((3, 51, 24, 12, 3, 7, 51, 8, 90, 10, 5, 24)))
+
+
+def merge(t1, t2):
+    c1,c2=0,0
+    if not t1:
+        return t2
+    if not t2:
+        return t1
+    if t1[0]>t2[0]:
+        t1,t2=t2,t1
+    ans=tuple()
+    while c1<len(t1) and c2<len(t2):
+        if t1[c1]>t2[c2]:
+            ans+=(t2[c2],)
+            c2+=1
+        else:
+            ans+=(t1[c1],)
+            c1+=1
+    if c1>=len(t1):
+        ans+=t2[c2:]
+    else:
+        ans+=t1[c1:]
+    return ans
+# g=(-3, 8, 65, 100, 207)
+g=tuple()
+# print(g==True)
+# merge((-3, 8, 65, 100, 207), (-10, 20, 30, 40, 65, 80, 90))
+merge(g, (-10, 20, 30, 40, 65, 80, 90))
+
+def reverse_tuple(t):
+    s=tuple()
+    g=[x for x in t[::-1]]#s=s+(x,)
+    # print([x for x in t[::-1]])
+    [s=s+(x,) for x in g]
+    return s
+print(reverse_tuple((1, 2, 3, 4, 5, 6, 7, 8, 9)))
+
+def repeat(s):
+    al=[]
+    p=[]
+    for x in s:
+        if not x in al:
+            al+=[x]
+        elif not x in p:
+            p+=[x]
+    return len(p)
+
+def repeat(st):
+    # s=[]
+    c=0
+    r=False
+    ans=1
+    for x in range(1,len(st)):
+        if st[x-1]==st[x]:
+            # s+=[]
+            if r==False:
+                c+=1
+            r=True
+
+            # if c>ans:ans=c
+        else\
+            r=False
+            # c=0
+    print(c)
+    return c
+
+repeat('hsSisSs')
+repeat('hssisss')
+
+
+
+n=5
+s=""
+for x in range(n):
+    p=((x)%2)*" "
+    # s+=p+(x//2)*"* "+"*\n"
+    print(p+(x//2)*"* "+"*\n")
+
+def triangle_iterative(n):
+    s=""
+    for x in range(1,n+1):
+        # s+=n*"$"+"\n"
+        s=s+n*"$"+"\n"
+        # '$\n$$\n$$$\n$$$$\n$$$$$\n'
+    print(s)
+    # return s
+triangle_iterative(5)
+
+def makeTriangle(sign):
+    def triangle(n):
+        print(n)
+        s=""
+        for x in range(1,n+1):
+            # s+=n*"$"+"\n"
+            s=s+x*sign+"\n"
+            # '$\n$$\n$$$\n$$$$\n$$$$$\n'
+        print(s)
+            # return triangle
+        return s
+    return triangle
+    # def triangle_iterative(n):
+
+makeTriangle('@')(5)
+
+
+import math
+def largest_square_pyramidal_num(n) :
+    k=math.floor((3*n)**(1/3))
+    if (2*k**3 + 3*k**2 + k)/6>n:
+        return (2*(k-1)**3 + 3*(k-1)**2 + (k-1))/6
+    # if (2*(k-1)**3 + 3*(k-1)**2 + (k-1))/6==n:
+        # return n
+    return (2*k**3 + 3*k**2 + k)/6
+largest_square_pyramidal_num(9)
+
+from math import *
+def find_largest_num(test_func, n) :
+    if n <= 0:
+        return False
+    elif test_prime(n) :
+        return n
+    else :
+        return find_largest_num(test_func, n-1)
+
+for x in range(-3,20):
+    print(x,find_largest_num(test_prime, x))
+
+
+
+# ugly remove dupe
+def remove_extras(l):
+    s=[]
+    a=0
+    z=len(l)
+    # for c,x in enumerate(l):
+    c=0
+    # while c<=len(l):
+    while c<z:
+        x=l[c]
+        print("cx",c,x)
+        # c=c-a
+        if x not in s:
+            s+=[x]
+        else:
+            l.pop(c-a)
+            # a+=1
+            c-=1
+            z-=1
+        c+=1
+        print("xs",x,s,l)
+    print(l)
+    return l
+
+# str replace flatten
+def count_occurrences(l, n):
+    t=str(l)
+    t=t.replace("[","")
+    t=t.replace("]","")
+    t=t.replace(" ","")
+    t=t.split(",")
+    s=t.count(str(n))
+    # return str(l)
+    return s
+
+
+def flat(l):
+    s=[]
+    for i,x in enumerate(l):
+        if type(x)==list: s+=flat(x)
+        else: s+=[x]
+    return s
+print(flat(a))
+
+
+def sort_age(l):
+    s=[("m",0)]
+    for x in l:
+        print("x",x)
+        # c=0
+        for c in range(len(s)):
+            print("c",s)
+            print("sdv",x[1],s[c][1])
+        # for c,p in enumerate(s):
+            if x[1]>s[c][1]:
+                c+=1
+            else:
+                s[c:c]=s[c]
+                # s[c+1:c+1]=s[c]
+                s[c:c]=l[c]
+                print("e",s)
+                break
+            l.append(x)
+    # return s
+    print(s)
+sort_age([("F", 18), ("M", 23), ("F", 19), ("M", 30)])
+
+
+list1 = [1] * 4
+list2 = [5, 5, 5]
+# while not 0:
+while 1:
+    list1[0] += 1
+    if list1[0] == 5:
+         break
+         list1[1] += 2
+    list1[2] += 3
+print(list1 , list2)    #[5, 1, 10, 1] [5, 5, 5]
+print(list1 < list2)
+
+
+def hanoi(num, st, ed, bu):
+    def shift(num,st,ed):
+        if num==1: return ((st,ed),)
+        return shift(num-1,st,6-st-ed)+((st,ed),)+shift(num-1,6-st-ed,ed)
+    return shift(num,st,ed)
+print(hanoi(4, 1, 3, 2))
+
+def transpose(m):
+    return [[p[x] for p in m]for x in range(len(m[0]))]
+def transpose(m):
+    c=len(m)
+    a=[]
+    for x in range(len(m[0])):
+        for p in range(c):
+            a+=[m[p][x]]
+        m.append(a)
+        a=[]
+    del m[0:c]
+    return m#.pop(0:c)
+m = [[ 1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print(transpose(m))
+
+
+
+def mode_score(s):
+    p=[x[2] for x in s]
+    t=0
+    q=list(set(p))
+    print(q)
+    for x in q:
+        print(x,p.count(x))
+        if p.count(x)>t:
+            a=[x]
+            t=p.count(x)
+        elif p.count(x)==t:
+            a+=[x]
+    return a
+
+
+def top_k(s, k):
+    a= sorted(s, key = lambda x: x[2],reverse=True)[:k]
+    a+=[x for x in s if x[-1]==a[-1][-1] and not x in a]
+    # return sorted(a, key=lambda x: (x[1], x[2]))
+    return sorted(a, key=lambda x: (-x[2], x[0])) #reverse sort by 3rd element then sort 1st element
+
+
+
+# hof with wierd code
+def accumulate(op, init, seq):
+    if not seq:
+        return init
+    else:
+        return op(seq[0], accumulate(op, init, seq[1:]))
+
+def accumulate_n(op, init, sequences):
+    if (not sequences) or (not sequences[0]):
+        return type(sequences)()
+    else:
+        return ( [accumulate(op, init, list(map(lambda x:x[0],sequences)))]
+               + accumulate_n(op, init, list(map(lambda x:x[1:],sequences))) )
+
+def letter_count(s):
+    s=[x for y in s for x in y]
+    c=list(set(s))
+    return [[x,s.count(x)] for x in c]
+
+def who_wins(m, n):
+    '''terrorist'''
+    c=len(n)%m
+    d=len(n)//m
+    print(len(n)%m)
+    # return n[-(len(n)%m)]
+# print(set(who_wins(3, ['val', 'hel', 'jam', 'jin', 'tze', 'eli', 'zha', 'lic'])))
+print(who_wins(2, ['poo', 'ste', 'sim', 'nic', 'luo', 'ibr', 'sie', 'zhu']))
+
+
+
+def translate(j,k,s):
+    j,k=list(j),list(k)
+    s=list(s)
+    for x,y in enumerate(s):
+        if y in j:
+            s[x]=k[j.index(y)]
+    return ''.join(s)
+print(translate("dikn","lvei","My tutor IS kind"))
+
+def calculate(i):
+    if len(i)==1: return i[0]
+    t=str(i)
+    t=t.replace(")","")
+    t=t.replace("(","")
+    t=t.replace(" ","")
+    t=t.replace(",","")
+    t=t.replace("''","")
+    t=list(t)
+    t=[x for x in t if not x in [" ",",","'"]]
+    c=0
+    e=len(t)
+    while c<e:
+        if t[c] in ['+', '-', '*', '/']:
+            d=t.pop(c-1)
+            t.insert(c,d)
+        c+=1
+    for x in range(int((len(t)-1)/2)):
+        print("z",t,''.join(t[:3]))
+        exec("z=" + ''.join(t[:3]), globals())
+        t=[str(z)]+t[3:]
+    return z
+print(calculate((1, 2, '+', 3, '*')))
+
+s = {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+print(type(s))
+f=[x for x in s]
+# [s[x]=s[x]+1 for x in f]
+for x in f:
+    s[x]+=1
+print(f,s)
+
+
+
+
+
+
 
 
 

@@ -643,7 +643,6 @@ def count_change(tt, ck):
 count_change(120,5)
 
 
-
 def copy_tree(t):
     ans=tuple()
     for x in t:
@@ -654,6 +653,9 @@ def copy_tree(t):
             ans=ans+(x,)+tuple()
         # ans=ans+tuple(x)
     return ans+tuple()
+s=(23,452,(23,4,2),23)
+print(copy_tree(s))
+print(copy_tree(s)==s,copy_tree(s) is s)
 
 
 
@@ -1164,6 +1166,164 @@ for x in f:
 print(f,s)
 
 
+def increase_by_one(s):
+    for x in s:
+        print(x)
+        # if type(x)==dict:
+        if type(s[x])==dict:
+            print("d",x)
+            increase_by_one(s[x])
+            print(x)
+        else:
+            s[x]=s[x]+1
+    return s
+    f=[x for x in s]
+    for x in f:
+        s[x]=s[x]+1
+    return increase_by_one(a)
+
+def increase_by_one(s):
+    f=[x for x in s]
+    for x in f:
+        s[x]=s[x]+1
+    return s
+print(increase_by_one({'1':2.7, '11':16, '111':{'a':5, 't':8}}))
+
+
+
+def find_cpf_rate():
+    i=0.0026314458525
+    q=166000
+    c=1280
+    d=240
+    p=deposit(q, i, 120)
+    return i,balance(p, i, c, d)
+def balance(p, i, c, d):
+    return (p*(1+i)**d)-c*((1+i)**d-1)/i
+def deposit(p, i, d):
+    return p*(1+i)**d
+print(find_cpf_rate())
+
+
+def findx(x, a):
+    try:
+        # return str(a)+str([a.index(x)])
+        return str([a.index(x)])
+    except ValueError:
+        for t,j in enumerate(a):
+            if type(j)== list:
+                # return str(a[t])+str(find_x(x, j))
+                # return str(a)+str([t])+str([findx(x, j)])
+                # return str([t])+str([findx(x, j)])
+                return str([t])+findx(x, j)
+        return
+
+def findx(x, a):
+    for i,j in enumerate(a):
+        if type(j)== list:
+            return str([i])+findx(x, j)
+        if j is x:
+            return str([i])
+# print(find_x(5, [1, 5]))
+# print(find_x(3, [1,5]))
+print(find_x(5, [1, 3, [5], 3]))
+
+
+
+class Number(object):
+    # complete the class definition #
+    def __init__(self, num):
+        self.num=num
+        # self.Undefined="Undefined"
+
+    def plus(self,n):
+        if 'Undefined' in [self.num,n.value()]:
+            # return Undefined
+            return Number('Undefined')
+        else:
+            return Number(self.num+n.value())
+
+    def times(self,n):
+        if 'Undefined' in [self.num,n.value()]:
+            # return Undefined
+            return Number('Undefined')
+        else:
+            return Number(self.num*n.value())
+
+    def divide(self,n):
+        if 'Undefined' in [self.num,n.value()]:
+            # return Undefined
+            return Number('Undefined')
+        if n.value()==0:
+            # return Undefined
+            return Number('Undefined')
+        else: return Number(self.num/n.value())
+
+    def minus(self,n):
+        if 'Undefined' in [self.num,n.value()]:
+            # return Undefined
+            return Number('Undefined')
+        else:
+            return Number(self.num-n.value())
+
+    def value(self):
+        if self.num=='Undefined': return "Undefined"
+        return self.num
+
+    def spell(self):
+        if self.num=='Undefined': return "Undefined"
+        elif len(str(self.num))>7: return "really large number"
+        n=self.num
+
+        a=str(n)
+        b=list(reversed(a))
+
+        one=['','one','two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten','eleven','twelve','thirteen' 'fourteen','fifteen']
+        o=one[:-3]
+        # twenty, thirty, fourty, fifty, sixty,seventy, eighty, ninety]
+        if n<=15:
+            return one[n]
+        elif n<
+        # print(one)
+        # []
+        ans=''
+        for i,v in enumerate(b):
+            # p=[' million', ' hundred','ty','thousand', 'hundred','teen']
+            p=['','ty', ' hundred', ' thousand', 'ty', ' hundred', ' million']
+            # plop=o[int(v)]+''+p[i]+' '
+            plop=''+p[i]+' '
+            if v=='0' and b[i+1]:
+                plop=''
+                # if :
+            plopp=o[int(v)]+plop
+            # print(i,i in [3])
+            if i in [3]:
+                plopp+='thousand '
+
+            # if v=='1' and i in [4,1]:
+            if i in [4,1]:
+                if v=='1':
+                    if int(v+b[i-1])<=12:
+                        one[n]
+                if =='0':
+                    plopp='ten '
+                elif:
+                else:
+                    plopp=
+
+            if i in [4,1] and i<len(b):
+                print(b[i+1],b[i+1]!='0')
+                if b[i+1]!='0':
+                    print('anded')
+                    plopp='and '+plopp
+            print(i,v)
+            # ans+=o[int(v)]
+            # ans=o[int(v)]+''+plop+''+ans
+            ans=plopp+''+ans
+        print(ans)
+        # return [x for x in a]
+gdn=Number(210792)
+gdn.spell()
 
 
 
@@ -1174,6 +1334,121 @@ print(f,s)
 
 
 
+def pascal(row, col):
+    if col == 1 or col == row:
+        return 1
+    else:
+        return pascal(row - 1, col) + pascal(row - 1, col - 1)
+col=2
+a=[pascal(r, col) for r in range(1,5)]
+print(a)
 
+
+
+
+def bar(f, g):
+    return lambda x: (lambda y: f(x))(g(x))
+print( bar(lambda x:x+1, lambda x:x*2)(5)) #6?
+
+
+s= [[0,1], [1,0], [1,1], [2,0]]
+for x,y in s:
+    print(x,y)
+    y=3
+
+for i,[x,y] in enumerate(s):
+    print(x,y)
+print(s)
+for x in s:
+    print(x)
+print(s+'yf')
+
+a = [1, [2, [3, 4]]]
+b = a[1].copy()
+c = b[1]
+# c[0], b[0] = b[0], c[0]
+b[0], c[0]=c[0], b[0]
+print(a)
+print(b)
+print(c)
+
+a=0
+b=1
+a,b=b,a
+print(a,b)
+
+
+a = [1, [1,2]]
+b = a.copy()
+# a[1] += [0] # both [1, [1, 2, 0]]
+a[1] = [1,2,0] # a=[1, [1, 2, 0]] b=[1, [1, 2]]
+a=[5]
+b=a
+a=[7]
+a=a+[1]
+print(id(a))
+a+=[1] #affects b too
+a.append(1) #affects b too
+print(a)
+print(b)
+print(id(a))
+
+a = ["CS", 1010, "U"]
+b = [a[:2], "S"]
+c = b.copy()
+c[0][1] = 2020
+# print (b + a[1])
+print(a,b,c)
+
+
+a=()
+print(a)
+# print(a[0],a[-1],a[0]+a[-1])
+print(a[-1])
+
+a=['a','b','A','B','Aa','AA','1','0','9','aa','ab',' ','a ','#']
+print(sorted(a)) #[' ', '0', '1', '9', 'A', 'B', 'a', 'a ', 'aa', 'ab', 'b']
+
+s = 'Lollapalooza'
+d = {}
+for i in range (len(s)): d[s[i%5]] = s[i]
+print (d)
+{'L': 'z', 'o': 'a', 'l': 'o', 'a': 'o'}
+
+a=[1,2,3,4,5]
+for x in a:
+    # a+=[x] #inf loop
+    a.pop()
+print(a)
+
+x = '1.2.3'
+print(x[:]) #1.2.3
+print(x[0:]) #1.2.3
+print(x[:5]) #1.2.3
+print(x[:-1]) #1.2.
+print(x[1:0]) #
+
+x, y, z = 0, 1, 2
+def f(x):
+    print(x)
+    return g(x+y+z)
+def g(y):
+    print (y)
+    return h(x+y+z)
+def h(z) :
+    print(z)
+    return x+y+z
+print (f(x+y+z)) #3 6 8 9
+
+def f(x):
+    print(x)
+    def g(y):
+        print (y)
+        def h(z) :
+            print(z)
+            return x+y+z
+        return h(x+y+z)
+    return g(x+y+z)
+print (f(x+y+z)) #3 6 11 20
 
 

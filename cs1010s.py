@@ -990,6 +990,14 @@ def remove_extras(l):
     print(l)
     return l
 
+
+def remove_extras(l):
+    s=[]
+    [s=s+[x] for x in l if x not in s]
+    return s
+remove_extras([1, 5, 1, 1, 3, 2])
+
+
 # str replace flatten
 def count_occurrences(l, n):
     t=str(l)
@@ -1450,5 +1458,295 @@ def f(x):
         return h(x+y+z)
     return g(x+y+z)
 print (f(x+y+z)) #3 6 11 20
+
+
+
+def power_set(l):
+    ans=[[]]
+    for i,v in enumerate(l):
+        ans+=[[v]+x for x in ans]
+    return ans
+print(power_set([1,2,3]))
+# print(power_set([5,7]))
+
+# final review
+def power_set_check(l):
+    #your code here
+    s=[len(x) for x in l]
+    s.sort()
+    return len(l)==2**s[-1]
+# push,peek,pop,size
+
+# list shallow
+a=[1,2,[5,6]]
+# a=[1,2]
+# b=a
+c=a.copy()
+a[1]=3
+a[2][1]=7
+# b[1]=1
+# b[2][1]=5
+
+print(a) #[1, 1, [5, 5]]
+# print(b) #[1, 1, [5, 5]]
+print(c) #[1, 2, [5, 5]]
+# print(a==b,a is b) #True True
+print(a==c,a is c) #False False
+
+# a+=a
+a+=[a] #[1, 2, [5, 6], [...]]
+# a=a+[a] #[1, 2, [5, 6], [1, 2, [5, 6]]]
+b=a.copy() #[1, 2, [...]]
+a[2]=0
+print(a)
+print(b)
+
+
+# cant change length of dict while iterating thriugh it
+d = {1:2, 3:4, 5:6}
+for k, v in d.items ():
+    # d[v//2] = k
+    # d[v]=k
+    if k==3:
+        # d.popo(3)
+        # del d[3]
+        # d[4]=7
+        k+=v
+print (d)
+# print(d.values()) #dict_values([2, 4, 6])
+print(d.keys()) #dict_keys([1, 3, 5])
+# print(list(d.values())) #[2, 4, 6]
+
+p = {'Brenda': 'Aaron', 'Claire': 'Brenda', 'David': 'Brenda','Elis': 'Claire', 'Freddy': 'Claire', 'Gerene': 'David'}
+
+def convert(p):
+d = {}
+for child, parent in p_dict.items():
+if parent not in d:
+d[parent] = []
+if child not in d:
+d[child] = []
+d[parent].append(child)
+return d
+
+
+
+
+def get_points(word, row, col, vert):
+    a=[]
+    if vert:
+        row, col=col,row
+    for x in range(len(word)):
+        # print(x)
+        a.append((row,col+x))
+        # print(a)
+    return a
+
+p=get_points('word', 4, 2, False)
+
+board = ['       ',
+        ' B     ',
+        ' APPLE ',
+        ' B  E  ',
+        ' E  T  ',
+        '       ']
+
+def get_chars(points, board):
+    ans=''
+    for x,y in points:
+        ans+=board[x][y]
+        # print(board[y][x])
+    print(ans)
+# get_chars(p, board)
+
+def num_same(s1, s2):
+    a=''.join(s1)
+    b=''.join(s2)
+    print(a,b)
+    s=list(map(lambda x,y:x==y,a,b))
+    print(sum(s))
+# num_same('BOB CAT', 'DR BRAT')
+# print(''.join(board))
+d=''.join(board)
+# d.replace(' ','')
+d.replace(" ","")
+# print(d)
+
+
+if num_same(get_chars(points, board), word) != len(word):
+    raise Exception('Cannot place word')
+
+
+def zipp(*s):
+    print(s)
+    # t=min([len(x) for x in s])
+    t=min(len(x) for x in s)
+    print(t)
+    ans=[[v] for v in s[0][:t]]
+    for x in s[1:]:
+        for i,y in enumerate(x[:t]):
+            ans[i].append(y)
+    return [tuple(x) for x in ans]
+
+def zipp(*seqs):
+    min_len = min(len(s) for s in seqs)
+    out = []
+    for i in range(min_len):
+        out.append(tuple(s[i] for s in seqs))
+    return out
+
+# print(zipp([1, 2, 3], [4, 5, 6], [7, 8, 9, 10]))
+print(zipp([1, 2, 3]))
+
+
+def mapn (fn, 1sts):
+    if lsts == () or lsts[0] == () :
+        return ()
+    else:
+        first = tuple (map(lambda x: x[0], 1sts))
+        rest = tuple (map (lambda x: x[1:1, 1sts))
+        return (fn(*first), ) + mapn (fn, rest)
+print(mapnl( Lambda x,y,z: (z, x+y), ((1, 2, 3), (4, 5, 6), ('first','second,'third'))))
+
+
+
+
+
+
+
+
+
+
+
+
+class Thing(object):
+    def __init__(self,name):
+        self.name=name
+        self.owner=None
+
+    def is_owned(self):
+        return self.owner!=None
+
+    def get_owner(self):
+        return self.owner
+
+
+
+class Mammal(object):
+    def __init__(self, name):
+        self.name=name
+    def get_name(self):
+        return self.name
+    def say(self):
+        return "What does the "+self.name+" say"
+
+class Dog(Mammal):
+    def __init__(self):
+        super().__init__("Dog")
+    def say(self):
+        return "woof"
+
+# Dog().say()="sg"
+# Mammal("Dog").say="sg"
+print(Dog().say(),Mammal("Dog").say())
+
+class Duration(object):
+    def __init__(self, minutes, seconds):
+        self.minutes=minutes+seconds//60
+        self.seconds=seconds%60
+        self.total_seconds=60*self.minutes+self.seconds
+
+    def get_minutes(self):
+        return self.minutes
+
+    def get_seconds(self):
+        return self.seconds
+    def __str__(self):
+        # return "P(" + str(self.x) + "," + str(self.y) + ")"
+        return str(self.minutes).zfill(2) +":"+ str(self.seconds).zfill(2)
+
+    def __add__(self, object):
+        # NOTE: New Point object is returned
+        return Duration(self.minutes + object.minutes, self.seconds + object.seconds)
+print((Duration(3, 30)).total_seconds)
+# print((Duration(3, 30)).get_seconds())
+
+class Point(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return "P(" + str(self.x) + "," + str(self.y) + ")"
+
+    def __add__(self, object):
+        # NOTE: New Point object is returned
+        return Point(self.x + object.x, self.y + object.y)
+
+p1 = Point(17, 23)
+p2 = Point(3, 4)
+p = p1 + p2     # uses add instead of usual +
+print( str(p) )      # P(4,6)   uses defined str, not built in str
+
+
+class Dog:
+    # Class attribute
+    species = "Canis familiaris"
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def speak(self, sound):
+        return f"{self.name} barks: {sound}"
+
+    def get_age(self):
+        return self.age
+
+# print(Dog.species)
+class JackRussellTerrier(Dog):
+    def speak(self, sound="Arf"):
+        return super().speak(sound)
+miles = JackRussellTerrier("Miles", 4)
+# print(miles.speak())
+seb=Dog('seb',5)
+print(seb.name)
+print(Dog.name)
+
+
+class Weapon:
+    def __init__(self, weapon_name, weapon_damage):
+        self.weapon_name = weapon_name
+        self.weapon_damage = weapon_damage
+
+    def display_weapon_name(self):
+        return self.weapon_name
+
+class Person: #good
+    def __init__(self, person_name, health, ranged_weapon):
+        self.person_name = person_name
+        self.health = health
+        # self.weapon = ranged_weapon
+        self.ranged_weapon = ranged_weapon
+
+    def display_person_info(self):
+        return self.person_name
+
+    def weapon_type(self):
+        # return self.weapon.display_weapon_name()
+        return self.ranged_weapon.display_weapon_name()
+
+    # def ranged_attack(self, ranged_weapon, target):
+    #     target.health -= self.weapon.weapon_damage
+    #     print("Weapon: %s" % self.weapon.weapon_name)
+    #     print(target.person_name + "'s Health: "+str(target.health))
+
+pistol = Weapon("Pistol", 40)
+bob = Person("Bob", 100, pistol)
+print(bob.display_person_info())
+print(bob.weapon_type())
+
+get attributes of class
+return ', '.join(i for i in dir(self.songs[0]) if not i.startswith('__'))
+
 
 

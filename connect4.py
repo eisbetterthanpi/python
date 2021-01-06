@@ -172,18 +172,9 @@ def search(state, game, nnet):
     reward=1
     print("win state",state,type(state))
     if game.win(state): return -reward
-    # Q=nnet.predict(s)
-    # Q=nnet.predict([s])
     Q={}
     N={}
-    # state_id = '/'.join([str(x) for x in s])
-    # state_id = ''.join([str(x) for x in game.getboard(s)])
     state_id = ''.join([str(x) for x in state])
-    # print('scheck1',s)
-    # if state_id in Q:
-    #     Q[state_id][action] = nnet.predict([s])[-1]
-    # else:
-    #     Q[state_id] = {action:nnet.predict([s])[-1]}
 
     # print("qqqqqqq",Q,len(Q),len(Q[0]))
     visited=np.array([[0]*42])
@@ -191,7 +182,6 @@ def search(state, game, nnet):
     s=game.getboard(state)
     if s not in visited:
         # visited.add(s)
-        # s=np.array(s)
         # print("sssss",s,len(s))
         visited=np.append(visited,s,axis=0)
         # P[s], v = nnet.predict(s)
@@ -214,17 +204,11 @@ def search(state, game, nnet):
     # print("pres",s)
     # print('prepre',s,s.shape)
     print('press',state,state.shape)
-    # prediction = nnet.predict(s)
-    # prediction = nnet.predict([s])
     prediction = nnet.predict(np.array([state]))
-    # prediction = nnet.predict([state])
-    # prediction = nnet.predict([[state]])
-    # prediction = nnet.predict([state,state])
     # print('out',prediction)
     # print('out1',prediction[0])
     # print('out2',prediction[-1])
     # P[s], v = prediction[:-1] ,prediction[-1]
-    # predictions = model.predict(x_test[:3])
     # tp=tf.argmax(predictions, 1)
 
     for a in game.getValidActions(state):
@@ -257,13 +241,8 @@ def search(state, game, nnet):
         else: N[state_id] = {a:1}
         # print('qqqqq',Q,state_id,a)
         # u = Q[s][a] + c_puct*P[s][a]*sqrt(sum(N[s]))/(1+N[s][a])
-        # u = Q[s][a] + c_puct*P[s][a]*(sum(N[s]))/(1+N[s][a])**(1/2)
-        # u = Q[s][a] + c_puct*pos[a]*(sum(N[s]))/(1+N[s][a])**(1/2)
         # u = Q[state_id][a] + c_puct*pos[a]*(sum(N[s]))/(1+N[s][a])**(1/2)
         u = Q[state_id][a] + c_puct*pos*(sum(N[state_id]))/(1+N[state_id][a])**(1/2)
-        # u = Q[state_id][a] + c_puct*pos
-        # v=(sum(N[state_id]))
-        # w=(1+N[state_id][a])**(1/2)
 
         if u>max_u:
             max_u = u
@@ -330,59 +309,6 @@ def executeEpisode(game, nnet):
             return examples
 
 
-# # https://rubikscode.net/2019/07/08/deep-q-learning-with-python-and-tensorflow-2-0/
-# class Agent:
-#     def __init__(self, enviroment, optimizer):
-#         self._state_size = enviroment.observation_space.n
-#         self._action_size = enviroment.action_space.n
-#         self._optimizer = optimizer
-#         self.expirience_replay = deque(maxlen=2000)
-#         self.gamma = 0.6 #discount
-#         self.epsilon = 0.1 #exploration rate
-#
-#         self.q_network = self._build_compile_model()
-#         self.target_network = self._build_compile_model()
-#         self.alighn_target_model()
-#
-#     def store(self, state, action, reward, next_state, terminated):
-#         self.expirience_replay.append((state, action, reward, next_state, terminated))
-#
-#     def _build_compile_model(self):
-#         model = Sequential()
-#         model.add(Embedding(self._state_size, 10, input_length=1))
-#         model.add(Reshape((10,)))
-#         model.add(Dense(50, activation='relu'))
-#         model.add(Dense(50, activation='relu'))
-#         model.add(Dense(self._action_size, activation='linear'))
-#
-#         model.compile(loss='mse', optimizer=self._optimizer)
-#         return model
-#
-#     def alighn_target_model(self):
-#         self.target_network.set_weights(self.q_network.get_weights())
-#
-#     def act(self, state):
-#         if np.random.rand() <= self.epsilon:
-#             return enviroment.action_space.sample()
-#
-#         q_values = self.q_network.predict(state)
-#         return np.argmax(q_values[0])
-#
-#     def retrain(self, batch_size):
-#         minibatch = random.sample(self.expirience_replay, batch_size)
-#
-#         for state, action, reward, next_state, terminated in minibatch:
-#
-#             target = self.q_network.predict(state)
-#
-#             if terminated:
-#                 target[0][action] = reward
-#             else:
-#                 t = self.target_network.predict(next_state)
-#                 target[0][action] = reward + self.gamma * np.amax(t)
-#
-#             self.q_network.fit(state, target, epochs=1, verbose=0)
-
 
 # data, model, compile, fit, evaluate
 def initNNet():
@@ -390,113 +316,56 @@ def initNNet():
     inputs = tf.keras.Input(shape=(6,7)) #figure out
     # inputs = tf.keras.Input(shape=(42,)) #[] line works python array? or reshape to wierd
     # inputs = tf.keras.Input(shape=(1,))
-    # inputs = tf.keras.Input(shape=(7,))
 
     x = layers.LSTM(124, activation = 'sigmoid', name='layer1', dropout = 0.4)(inputs)
-    # x = layers.Conv2D(4, 4)(inputs)
-    # x = layers.Conv2D(1,(1,64))(inputs)
-    # x = layers.Conv2D(1,(64,))(inputs) #nope, kernel size should be tup size 2
-    # x = layers.Conv2D(None,(1,64))(inputs)
     # x = layers.Conv2D(1,64)(inputs)
-
     # x = layers.Dense((None,67), activation="relu", name="dense_1")(inputs)
-    # x = layers.Dense((None,67), activation="relu", name="dense_1")(x)
     # x = layers.Dense(67, activation="relu", name="dense_1")(inputs)
-    # x = layers.Dense((8,9), activation="relu", name="dense_1")(x)
-    # x = layers.Dense((6,7), activation="relu", name="dense_2")(x)
+
     x = layers.Dense(67, activation="relu", name="dense_2")(x)
     # outputs = layers.Dense((0,7), name="predictions")(x)
     # outputs = layers.Dense(7, activation="softmax", name="predictions")(x)
-    # outputs = layers.Dense(8, activation="softmax", name="predictions")(x)
     # model = keras.Model(inputs=inputs, outputs=outputs)
 
     # yrow = keras.Input(shape=(row,), name="inputs")
-    # xcol = keras.Input(shape=(1col,), name="targets")
+    # xcol = keras.Input(shape=(col,), name="targets")
     p = layers.Dense(7, activation="softmax", name="predict")(x)
     v = layers.Dense(1, activation="softmax", name="value")(x)
     # model = keras.Model(inputs=[yrow,xcol], outputs=[p,v])
     model = keras.Model(inputs=inputs, outputs=[p,v])
 
-    # P[s], v = model.predict()
-    # model = keras.Model(inputs=[inputs, targets], outputs=predictions)
-    # model = keras.Model(inputs=[image_input, timeseries_input], outputs=[score_output, class_output])
+
+    # checkpoint_path = "training_1/cp.ckpt"
+    import os
+    checkpoint_path = "F:\modelckpt\c4m.ckpt"
+    checkpoint_dir = os.path.dirname(checkpoint_path)
+
+    # Create a callback that saves the model's weights
+    cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_weights_only=True, verbose=1)
+
+    # Train the model with the new callback
+    # model.fit(train_images, train_labels, epochs=10, validation_data=(test_images, test_labels), callbacks=[cp_callback])  # Pass callback to training
+
     model.summary()
     return model
 
 
-# inputs = keras.Input(shape=(3,), name="inputs")
-# targets = keras.Input(shape=(10,), name="targets")
-# logits = keras.layers.Dense(10)(inputs)
-# predictions = LogisticEndpoint(name="predictions")(logits, targets)
-#
-#
-# image_input = keras.Input(shape=(32, 32, 3), name="img_input")
-# x1 = layers.Conv2D(3, 3)(image_input)
-# x1 = layers.GlobalMaxPooling2D()(x1)
-#
-# timeseries_input = keras.Input(shape=(None, 10), name="ts_input")
-# x2 = layers.Conv1D(3, 3)(timeseries_input)
-# x2 = layers.GlobalMaxPooling1D()(x2)
-#
-# x = layers.concatenate([x1, x2])
-# score_output = layers.Dense(1, name="score_output")(x)
-# class_output = layers.Dense(5, name="class_output")(x)
-
-#
-# def othellomodel():
-#     # input = Input(shape=(self.board_x, self.board_y))    # s: batch_size x board_x x board_y
-#     # inputs = tf.keras.Input(shape=(rows,cols), name="digits")
-#     inputs = tf.keras.Input(rows,cols)
-#
-#     x_image = tf.reshape(inputs,(rows,cols, 1))                # batch_size  x board_x x board_y x 1
-#     # h_conv1 = tf.keras.layers.Activation('relu')(tf.keras.layers.BatchNormalization(axis=3)(tf.keras.layers.Conv2D(args.num_channels, 3, padding='same', use_bias=False)(x_image)))         # batch_size  x board_x x board_y x num_channels
-#     h_conv1 = tf.keras.layers.Activation('relu')(tf.keras.layers.BatchNormalization(axis=3)(tf.keras.layers.Conv2D(512, 3, padding='same', use_bias=False)(x_image)))         # batch_size  x board_x x board_y x num_channels
-#     h_conv2 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(args.num_channels, 3, padding='same', use_bias=False)(h_conv1)))         # batch_size  x board_x x board_y x num_channels
-#     h_conv3 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(args.num_channels, 3, padding='valid', use_bias=False)(h_conv2)))        # batch_size  x (board_x-2) x (board_y-2) x num_channels
-#     h_conv4 = Activation('relu')(BatchNormalization(axis=3)(Conv2D(args.num_channels, 3, padding='valid', use_bias=False)(h_conv3)))        # batch_size  x (board_x-4) x (board_y-4) x num_channels
-#     h_conv4_flat = Flatten()(h_conv4)
-#     s_fc1 = Dropout(args.dropout)(Activation('relu')(BatchNormalization(axis=1)(Dense(1024, use_bias=False)(h_conv4_flat))))  # batch_size x 1024
-#     s_fc2 = Dropout(args.dropout)(Activation('relu')(BatchNormalization(axis=1)(Dense(512, use_bias=False)(s_fc1))))          # batch_size x 1024
-#     pi = Dense(self.action_size, activation='softmax', name='pi')(s_fc2)   # batch_size x self.action_size
-#     v = Dense(1, activation='tanh', name='v')(s_fc2)                    # batch_size x 1
-#
-#     model = keras.Model(inputs=self.input_boards, outputs=[pi, v])
-#     # model.compile(loss=['categorical_crossentropy','mean_squared_error'], optimizer=Adam(args.lr))
-#     model.summary()
-#     return model
 
 
 
-def NNett(): #dummy
-    model = initNNet()
-    model.compile(optimizer=keras.optimizers.RMSprop(learning_rate=1e-3), # Optimizer
-    # optimizer=keras.optimizers.RMSprop(1e-3),
-    loss=keras.losses.SparseCategoricalCrossentropy(),
-    # loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-    # metrics=[CategoricalTruePositives()],
-    metrics=[keras.metrics.SparseCategoricalAccuracy()], # List of metrics to monitor
-    )
 
-    # # different losses to different outputs
-    # model.compile(optimizer=keras.optimizers.RMSprop(1e-3),
-    #     # loss=[None, keras.losses.CategoricalCrossentropy()],
-    #     loss=[keras.losses.MeanSquaredError(), keras.losses.CategoricalCrossentropy()],
-    #     # metrics=[[keras.metrics.MeanAbsolutePercentageError(),keras.metrics.MeanAbsoluteError(),],
-    #         # [keras.metrics.CategoricalAccuracy()],],)
-    #     # loss_weights
-    #     )
 
-    # import os #sys
-    # dirname = os.path.dirname() #(__file__)
-    # filename = os.path.join(dirname, 'relative/path/to/file/you/want')
-    # "F:/callbacksave/"
-    # callbacks = [keras.callbacks.ModelCheckpoint(
-    #         filepath="F:/callbacksave" + "/ckpt-loss={loss:.2f}",
-    #         # filepath="mymodel_{epoch}", # Path where to save the model
-    #         # save_freq=100, # saves a SavedModeland training loss every 100 batches
-    #         save_best_only=True,  # Only save a model iff `val_loss` has improved.
-    #         monitor="val_loss", # The saved model name will include the current epoch.
-    #         verbose=1,)]
+    import os #sys
+    dirname = os.path.dirname() #(__file__)
+    filename = os.path.join(dirname, 'relative/path/to/file/you/want')
+    "F:/callbacksave/"
+    callbacks = [keras.callbacks.ModelCheckpoint(
+            filepath="F:/callbacksave" + "/ckpt-loss={loss:.2f}",
+            # filepath="mymodel_{epoch}", # Path where to save the model
+            # save_freq=100, # saves a SavedModeland training loss every 100 batches
+            save_best_only=True,  # Only save a model iff `val_loss` has improved.
+            monitor="val_loss", # The saved model name will include the current epoch.
+            verbose=1,)]
 
     rownum, colnum=16,17
     # history = model.fit([rownum, colnum], played, batch_size=32, epochs=1)
@@ -513,8 +382,6 @@ def NNett(): #dummy
 # slot(self,play,board=None,p=None):
 # show(self,board=None):
 
-
-
 game=connect4()
 nnet=initNNet()
 executeEpisode(game, nnet)
@@ -530,8 +397,6 @@ def mest():
     [-1, 0, -1, 0, 1, 0, 0],
     [0, 0, 0, 0, 0, 1, 0],
     [0, 0, 0, 0, 0, 0, 0]] #(6,7)    (None, 7)
-    # board=[0, 1, 1, 1, 1, -1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, -1, 0, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0] #(42,)
-    # board=[board]
     state=np.array(state)
     state=np.array([state])
     print(state)
@@ -547,64 +412,21 @@ def mest():
     # prediction = nnet.predict([state])
     prediction = nnet.predict(state)
     print(prediction)
-    # visited=np.array([])
-    # visited=np.array([[0]*42])
-    # print(visited)
-    # visited=np.append(visited,board,axis=0)
-    # print(visited)
-    # visited=np.append(visited,board,axis=0)
-    # print(visited)
 
     # print('win',game.win(board),game.win())
     # game.slot(1,state,p=None)
     # sb=game.getboard(state)
     # print(sb)
     game.slot(1,sb)
-# mest()
 
-def test():
-    game=connect4(6,7,4)
-
-    # b='''[[ 0  0  1 -1 -1  1  0]
-    #  [ 0  0 -1  1  1  0  0]
-    #  [ 0  0 -1  1  0  0  0]
-    #  [ 0  0  1 -1  0  0  0]
-    #  [ 0  0  0  0  0  0  0]
-    #  [ 0  0  0  0  0  0  0]]'''
     # b=b.replace(' ',',')
     # b=b.replace(',,',',')
     # b=b.split()
     # ''.join(b)
+# mest()
 
-    s= [[1, 0, 0, 0, 0, 0, 1],
-    [0, 1, 0, 0, 0, 1, -1],
-    [0, 0, 1, 0, 1, 0, -1],
-    [0, 0, 0, 1, 0, 0, -1],
-    [0, 0, 0, 0, 0, 1, -1],
-    [0, 0, 0, -1, -1, -1, -1]]
-    print(sum(sum(s)))
-    s=np.array(s)
-    # game.show(s)
-    # print(game.win(s))
-    # print('gb')
-    # # print(game.win())
-    # # slot(self,play,board=None,p=None)
-    # # print(game.getboard(s))
-    # game.show()
-    # game.show(s)
 
-    print("tttttttttttttt")
-    # sb=game.getboard(s)
-    # print(s,sb)
-    game.slot(1,s,p=None)
-    # game.show()
-    # game.show(s)
-    # game.slot(4)
-    # game.show()
-    game.show(s)
-# test()
 
-#
 def twoplayer():
     game=connect4(6,7,4)
     pl=1

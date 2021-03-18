@@ -63,7 +63,7 @@ def draw(file,num,fig, ax):
     ax[num][0].set_title(file, fontsize=12)
     # ax[num][1].imshow(img_adapteq) #choose image to show in top mid
     ax[num][1].imshow(img_blur)
-    ax[num][1].set_title('brighten', fontsize=12)
+    ax[num][1].set_title('blur', fontsize=12)
     return img_grey
 
 def twocol(bf,file1,file2,cpts):

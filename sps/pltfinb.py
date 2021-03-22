@@ -1,5 +1,4 @@
 
-# base
 import matplotlib.pyplot as plt
 import numpy as np
 from skimage import data, img_as_float, exposure
@@ -116,11 +115,13 @@ def threeimg(i,j):
     return cb1,cb2
 
 
-a=['M22 ','RP22 ']
+a=['M22','RP22']
+# a=['M22 ','RP22 ']
 b=['+IPTG ','-IPTG ']
 c=['BF ','CFP ','YFP ']
-d=[['1','4','5','6'],['1','2','3','4'],['1','2','3','4'],['1','2','3','4','5','6']]
-# python "F:\sps python\pltfin.py"
+d=['2 400ms','3 400ms','4 400ms'],['1','2 400ms','3 400ms'],['1','2','3'],['3','4','5']
+# d=[['1','4','5','6'],['1','2','3','4'],['1','2','3','4'],['1','2','3','4','5','6']]
+# python "F:\sps python\pltfinb.py"
 def run():
 
     # go through M22+IPTG CFP/YFP 2/3/4 400ms.jpg
@@ -138,12 +139,18 @@ def run():
     # for i in [0]:
         for j in [0,1]:
         # for j in [0]:
-            cb1,cb2=threeimg(i,j)
+            cfp,yfp=threeimg(i,j)
             # fig=plt.figure(figsize=(5, 3))
-            ax[i,j].scatter(cb1, cb2,1)
+            ax[i,j].scatter(cfp, yfp,1)
             ax[i,j].set_title(a[i]+b[j])
             # plt.xlabel(c[1])
             # plt.ylabel(c[2])
+            nint=(np.mean((cfp-yfp)**2)/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
+            next=((np.mean(cfp*yfp)-np.mean(cfp)*np.mean(yfp))/(np.mean(cfp)*np.mean(yfp)))**(1/2)
+            ntot=((np.mean((cfp**2)+(yfp**2))-2*np.mean(cfp)*np.mean(yfp))/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
+            dp=3
+            nint,next,ntot=np.round(nint,dp),np.round(next,dp),np.round(ntot,dp)
+            print(nint,next,ntot)
     plt.show()
 
     return

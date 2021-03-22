@@ -1,4 +1,5 @@
 
+# base
 import matplotlib.pyplot as plt
 import numpy as np
 from skimage import data, img_as_float, exposure
@@ -7,9 +8,6 @@ from skimage.color import rgb2grey                      # Tools to convert image
 from skimage.filters import threshold_otsu, threshold_yen, try_all_threshold  # To detect a threshold value for binarizing
 from skimage.filters import gaussian
 
-# https://drive.google.com/drive/u/1/folders/1iIznoItdc160ge6uUFaqv9rb9Lw2SqN_
-# change folder location
-folder="F:\sps python\jpged\\" # only jpeg images
 
 # python "F:\sps python\pltfin.py"
 def get_points(file,num,fig, ax):
@@ -27,8 +25,9 @@ def get_points(file,num,fig, ax):
     ax[num][0].set_title(file, fontsize=12)
     ax[num][1].imshow(img_adapteq)
     ax[num][1].set_title('brighten', fontsize=12)
-    ax[num][2].imshow(img_labelled, cmap='gray')
-    ax[num][2].set_title('locate cells', fontsize=12)
+    # ax[num][2].imshow(img_labelled, cmap='gray')
+    ax[num][2].imshow(img, cmap='gray')
+    ax[num][2].set_title('located cells', fontsize=12)
 
     info = measure.regionprops(img_labelled)
     no_of_regions = len(info)
@@ -43,10 +42,11 @@ def get_points(file,num,fig, ax):
         # print(f'c{info[i].centroid} a{info[i].area}')
         if a>5:
             # ax[num][2].text(y, x, info[i].area, ha='center',color='white',fontsize=8)
-            ax[num][2].text(y, x, '.', ha='center',color='red',fontsize=12)
+            # ax[num][2].text(y, x, '.', ha='center',color='red',fontsize=12)
             pts=np.append(pts,np.array([[x,y]]),0)
             bright=np.append(bright,np.array(img_grey[x,y]))
             pass
+    ax[num][2].scatter(pts[:,1],pts[:,0],1,color='red')
     return pts[1:],img_grey
 
 def draw(file,num,fig, ax):
@@ -56,13 +56,15 @@ def draw(file,num,fig, ax):
     # t = threshold_otsu(img_grey)
     t = threshold_yen(img_grey)
     img_adapteq = exposure.equalize_adapthist(img, clip_limit=0.03)
-    img_blur=gaussian(img, sigma=3) #blur for plot only, not for analysis
+    # img_blur=gaussian(img, sigma=3) #blur for plot only, not for analysis
+    img_blur=gaussian(img_adapteq, sigma=3) #blur for plot only, not for analysis
 
     ax[num][0].imshow(img)
     ax[num][0].set_title(file, fontsize=12)
     # ax[num][1].imshow(img_adapteq) #choose image to show in top mid
+    ax[num][1].set_title('brighten and blur', fontsize=12)
     ax[num][1].imshow(img_blur)
-    ax[num][1].set_title('blur', fontsize=12)
+    # ax[num][1].set_title('blur', fontsize=12)
     return img_grey
 
 def twocol(bf,file1,file2,cpts):
@@ -94,7 +96,7 @@ def twocol(bf,file1,file2,cpts):
 
     ax[1][2].scatter(nb1, nb2,1)
     ax[1][2].set_title('normalised')
-    plt.close() #comment out to show analysis of each cfp gfp img pair
+    # plt.close() #comment out to show analysis of each cfp gfp img pair
     return ptsr,nb1,nb2
 
 def threeimg(i,j):
@@ -111,9 +113,14 @@ def threeimg(i,j):
         cb1=np.append(nb1,cb1)
         cb2=np.append(nb2,cb2)
         print(a[i]+b[j]+d[2*i+j][x],'found',len(cpts),'cells')
-        # plt.show() #uncomment to show each cfp gfp img pairs
+        plt.show() #uncomment to show each cfp gfp img pairs
     return cb1,cb2
 
+
+# https://drive.google.com/drive/u/1/folders/1iIznoItdc160ge6uUFaqv9rb9Lw2SqN_
+# change folder location
+# folder="F:\sps python\cell_img\\" #old
+folder="F:\sps python\jpged\\" # only jpeg images
 
 # a=['M22','RP22']
 a=['M22 ','RP22 ']
@@ -125,33 +132,35 @@ d=[['1','4','5','6'],['1','2','3','4'],['1','2','3','4'],['1','2','3','4','5','6
 def run():
 
     # go through M22+IPTG CFP/YFP 2/3/4 400ms.jpg
-    # i=0 #0:M22 1:RP22
-    # j=0 #0:+IPTG 1:-IPTG
-    # cb1,cb2=threeimg(i,j)
-    # fig=plt.figure(figsize=(5, 3))
-    # plt.scatter(cb1, cb2,1)
-    # plt.xlabel('chaaess')
-    # plt.show()
+    i=0 #0:M22 1:RP22
+    j=0 #0:+IPTG 1:-IPTG
+    cb1,cb2=threeimg(i,j)
+    fig=plt.figure(figsize=(5, 3))
+    plt.scatter(cb1, cb2,1)
+    plt.xlabel('chaaess')
+    plt.show()
 
     # go through all images, plot graph
-    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(10, 4))
-    for i in [0,1]:
-    # for i in [0]:
-        for j in [0,1]:
-        # for j in [0]:
-            cfp,yfp=threeimg(i,j)
-            # fig=plt.figure(figsize=(5, 3))
-            ax[i,j].scatter(cfp, yfp,1)
-            ax[i,j].set_title(a[i]+b[j])
-            # plt.xlabel(c[1])
-            # plt.ylabel(c[2])
-            nint=(np.mean((cfp-yfp)**2)/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
-            next=((np.mean(cfp*yfp)-np.mean(cfp)*np.mean(yfp))/(np.mean(cfp)*np.mean(yfp)))**(1/2)
-            ntot=((np.mean((cfp**2)+(yfp**2))-2*np.mean(cfp)*np.mean(yfp))/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
-            dp=3
-            nint,next,ntot=np.round(nint,dp),np.round(next,dp),np.round(ntot,dp)
-            print(nint,next,ntot)
-    plt.show()
+    # fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(10, 4))
+    # for i in [0,1]:
+    # # for i in [0]:
+    #     for j in [0,1]:
+    #     # for j in [0]:
+    #         cfp,yfp=threeimg(i,j)
+    #         # fig=plt.figure(figsize=(5, 3))
+    #         ax[i,j].scatter(cfp, yfp,1)
+    #         ax[i,j].set_title(a[i]+b[j])
+    #         # plt.xlabel(c[1])
+    #         # plt.ylabel(c[2])
+    #         # print(cfp,yfp,cfp-yfp)
+    #         nint=(np.mean((cfp-yfp)**2)/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
+    #         # print((cfp-yfp)**2,nint)
+    #         next=((np.mean(cfp*yfp)-np.mean(cfp)*np.mean(yfp))/(np.mean(cfp)*np.mean(yfp)))**(1/2)
+    #         ntot=((np.mean((cfp**2)+(yfp**2))-2*np.mean(cfp)*np.mean(yfp))/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
+    #         dp=3
+    #         nint,next,ntot=np.round(nint,dp),np.round(next,dp),np.round(ntot,dp)
+    #         print(nint,next,ntot)
+    # plt.show()
 
     return
 

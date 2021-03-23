@@ -1,5 +1,4 @@
 
-# base
 import matplotlib.pyplot as plt
 import numpy as np
 from skimage import data, img_as_float, exposure
@@ -9,7 +8,7 @@ from skimage.filters import threshold_otsu, threshold_yen, try_all_threshold  # 
 from skimage.filters import gaussian
 
 
-# python "F:\sps python\pltfin.py"
+# python "F:\sps python\temp.py"
 def get_points(file,num,fig, ax):
     image = plt.imread(folder+file)
     img = img_as_float(image)
@@ -96,7 +95,7 @@ def twocol(bf,file1,file2,cpts):
 
     ax[1][2].scatter(nb1, nb2,1)
     ax[1][2].set_title('normalised')
-    # plt.close() #comment out to show analysis of each cfp gfp img pair
+    plt.close() #comment out to show analysis of each cfp gfp img pair
     return ptsr,nb1,nb2
 
 def threeimg(i,j):
@@ -113,7 +112,7 @@ def threeimg(i,j):
         cb1=np.append(nb1,cb1)
         cb2=np.append(nb2,cb2)
         print(a[i]+b[j]+d[2*i+j][x],'found',len(cpts),'cells')
-        plt.show() #uncomment to show each cfp gfp img pairs
+        # plt.show() #uncomment to show each cfp gfp img pairs
     return cb1,cb2
 
 
@@ -132,35 +131,35 @@ d=[['1','4','5','6'],['1','2','3','4'],['1','2','3','4'],['1','2','3','4','5','6
 def run():
 
     # go through M22+IPTG CFP/YFP 2/3/4 400ms.jpg
-    i=0 #0:M22 1:RP22
-    j=0 #0:+IPTG 1:-IPTG
-    cb1,cb2=threeimg(i,j)
-    fig=plt.figure(figsize=(5, 3))
-    plt.scatter(cb1, cb2,1)
-    plt.xlabel('chaaess')
-    plt.show()
+    # i=0 #0:M22 1:RP22
+    # j=0 #0:+IPTG 1:-IPTG
+    # cb1,cb2=threeimg(i,j)
+    # fig=plt.figure(figsize=(5, 3))
+    # plt.scatter(cb1, cb2,1)
+    # plt.xlabel('chaaess')
+    # plt.show()
 
     # go through all images, plot graph
-    # fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(10, 4))
-    # for i in [0,1]:
-    # # for i in [0]:
-    #     for j in [0,1]:
-    #     # for j in [0]:
-    #         cfp,yfp=threeimg(i,j)
-    #         # fig=plt.figure(figsize=(5, 3))
-    #         ax[i,j].scatter(cfp, yfp,1)
-    #         ax[i,j].set_title(a[i]+b[j])
-    #         # plt.xlabel(c[1])
-    #         # plt.ylabel(c[2])
-    #         # print(cfp,yfp,cfp-yfp)
-    #         nint=(np.mean((cfp-yfp)**2)/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
-    #         # print((cfp-yfp)**2,nint)
-    #         next=((np.mean(cfp*yfp)-np.mean(cfp)*np.mean(yfp))/(np.mean(cfp)*np.mean(yfp)))**(1/2)
-    #         ntot=((np.mean((cfp**2)+(yfp**2))-2*np.mean(cfp)*np.mean(yfp))/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
-    #         dp=3
-    #         nint,next,ntot=np.round(nint,dp),np.round(next,dp),np.round(ntot,dp)
-    #         print(nint,next,ntot)
-    # plt.show()
+    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(10, 4))
+    for i in [0,1]:
+    # for i in [0]:
+        for j in [0,1]:
+        # for j in [0]:
+            cfp,yfp=threeimg(i,j)
+            # fig=plt.figure(figsize=(5, 3))
+            ax[i,j].scatter(cfp, yfp,1)
+            ax[i,j].set_title(a[i]+b[j])
+            # plt.xlabel(c[1])
+            # plt.ylabel(c[2])
+            # print(cfp,yfp,cfp-yfp)
+            nint=(np.mean((cfp-yfp)**2)/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
+            # print((cfp-yfp)**2,nint)
+            next=((np.mean(cfp*yfp)-np.mean(cfp)*np.mean(yfp))/(np.mean(cfp)*np.mean(yfp)))**(1/2)
+            ntot=((np.mean((cfp**2)+(yfp**2))-2*np.mean(cfp)*np.mean(yfp))/(2*np.mean(cfp)*np.mean(yfp)))**(1/2)
+            dp=3
+            nint,next,ntot=np.round(nint,dp),np.round(next,dp),np.round(ntot,dp)
+            print(nint,next,ntot)
+    plt.show()
 
     return
 

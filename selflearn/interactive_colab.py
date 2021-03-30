@@ -10,6 +10,7 @@ import model, sample, encoder
 # python3.7 "F:\selflearn\gpt-2-master\src\interactive_conditional_samples.py"
 
 def interact_model(
+    raw_text='Write an essay on the meaning of life and how one can arrive at their answer to the meaning of life, with reference to ideas from Man\'s search for meaning by Victor frankl. essay: ',
     model_name='1558M', # 124M 1558M
     seed=None,
     nsamples=1,

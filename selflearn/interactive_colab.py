@@ -71,7 +71,7 @@ def interact_model(
         saver.restore(sess, ckpt)
 
         while True:
-            # raw_text = input("Model prompt >>> ")
+            prompt = input("Model prompt >>> ")
 #             f="F:\selflearn\\raw_text.txt"
 #             with open(f, 'r') as file:
 #                 raw_text = file.read().replace('\n', '')

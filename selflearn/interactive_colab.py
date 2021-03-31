@@ -5,12 +5,9 @@ import json
 import os
 import numpy as np
 import tensorflow as tf
-
 import model, sample, encoder
-# python3.7 "F:\selflearn\gpt-2-master\src\interactive_conditional_samples.py"
 
 def interact_model(
-    raw_text='Write an essay on the meaning of life and how one can arrive at their answer to the meaning of life, with reference to ideas from Man\'s search for meaning by Victor frankl. essay: ',
     model_name='1558M', # 124M 1558M
     seed=None,
     nsamples=1,
@@ -78,7 +75,9 @@ def interact_model(
 #             f="F:\selflearn\\raw_text.txt"
 #             with open(f, 'r') as file:
 #                 raw_text = file.read().replace('\n', '')
-            raw_text = raw_text.replace('\n', ' ')
+#             raw_text = raw_text.replace('\n', ' ')
+            from gpt2_save import *
+            raw_text=character+summary+yesterday+prompt
             while not raw_text:
                 print('Prompt should not be empty!')
                 raw_text = input("Model prompt >>> ")

@@ -6,6 +6,8 @@ import os
 import numpy as np
 import tensorflow as tf
 import model, sample, encoder
+from gpt2_save import *
+raw_text=character+summary+yesterday
 
 def interact_model(
     model_name='1558M', # 124M 1558M
@@ -76,8 +78,9 @@ def interact_model(
 #             with open(f, 'r') as file:
 #                 raw_text = file.read().replace('\n', '')
 #             raw_text = raw_text.replace('\n', ' ')
-            from gpt2_save import *
-            raw_text=character+summary+yesterday+prompt
+#             from gpt2_save import *
+#             raw_text=character+summary+yesterday+prompt
+            raw_text=raw_text+prompt
             while not raw_text:
                 print('Prompt should not be empty!')
                 raw_text = input("Model prompt >>> ")

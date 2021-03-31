@@ -78,6 +78,7 @@ def interact_model(
 #             f="F:\selflearn\\raw_text.txt"
 #             with open(f, 'r') as file:
 #                 raw_text = file.read().replace('\n', '')
+            raw_text = raw_text.replace('\n', ' ')
             while not raw_text:
                 print('Prompt should not be empty!')
                 raw_text = input("Model prompt >>> ")

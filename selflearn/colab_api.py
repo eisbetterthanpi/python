@@ -42,15 +42,16 @@ myElem = WebDriverWait(driver, 7).until(EC.presence_of_element_located((By.ID, '
 
 
 print(driver.title)
-# ctrl-F9
-# run cell # command="runall"
+# ctrl-F9 # run cell # command="runall"
+# driver.find_element_by_xpath("command='runall'").click() #this is from 1
+
 # document.getElementById(":1v").click()
 setup='''
 document.getElementsByTagName("colab-run-button")[0].click()
 '''
 # driver.execute_script(setup)
-# document.getElementById("identifierNext").click()
-
+driver.find_element_by_xpath("(//colab-run-button)[2]").click() #this is from 1
+WebDriverWait(driver, 60).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
 # time.sleep(3)
 
 
@@ -64,51 +65,44 @@ document.getElementsByTagName("colab-run-button")[0].click()
 # usage limits usage-limit
 
 
-# time.sleep(3)
-import sys
+time.sleep(3)
+
+
+
 while True:
     print(driver.title)
     high=input("here: ")
-    # img=document.getElementsByClassName("output_subarea output_image").item(0).children[0].src
+    WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
+
     looprun='''
     document.getElementsByTagName("colab-run-button")[1].click()
     document.getElementsByClassName("view-lines").item(1).children[11].children[0].children[0].innerText="{}"
     '''.format("# "+high)
     # driver.execute_script(looprun)
+    driver.find_element_by_xpath("(//colab-run-button)[2]").click()
+    node = driver.find_element_by_xpath("(//div[@class='view-lines'])[2]/div[12]/span/span")
+    script = "arguments[0].innerText=arguments[1]"
+    driver.execute_script(script, node, '# '+high)
 
-    driver.find_element_by_xpath("//colab-run-button/").click()
-    driver.find_element_by_xpath("(//div[@class='view-lines'])[2]/div[11]/span/span").get_attribute("innerText")='# '+high
-
-
-
-    # WebDriverWait(driver, 7).until(not EC.presence_of_element_located((By.CLASS_NAME, 'cell-execution focused animating running')))
-    # cell-execution focused animating running
-
-
+    # WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'cell-execution focused animating running'))) # code-has-output
+    WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
+    time.sleep(7)
 
     # document.getElementsByClassName('output_subarea output_image').item(0).children[0].src #only if clicked within iframe
     iframe=driver.find_element_by_xpath("//div[@class='outputview']/iframe")
     driver.switch_to.frame(iframe)
-
     wait = WebDriverWait(driver, 1)
     # WebDriverWait(driver, 20).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH,"//iframe[@id='textarea-WYSIWYG_ifr']")))
     # WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//body[@id='tinymce' and @class='mce-content-body']/p"))).send_keys("anynaynanya")
+    # img=document.getElementsByClassName("output_subarea output_image").item(0).children[0].src
+    img = driver.find_element_by_xpath("//div[@class='output_subarea output_image']/img").get_attribute("src")
+    print(img[:50])
+
+    driver.switch_to.default_content()
 
 
-    img = driver.find_element_by_xpath("//div[@class='output_subarea output_image']/img")
-    img = img.get_attribute("src")
-    print(img)
-
-    # driver.switch_to.default_content()
+    # import sys
     # print("nope",sys.exc_info())
-
-
-    # img=driver.execute_script("return document.getElementsByClassName('output_subarea output_image').item(0).children[0].src[get_img.index(':')+1:]")
-    # get_img = document.getElementsByClassName('output_subarea output_image').item(0).children[0].src
-    # get_img = get_img[get_img.index(':')+1:] # this will strip off 'javascript:' from the string name, so now 'func_name' contains 'onEditNumber();'
-    # img = driver.execute_script('return ' + get_img)
-
-    # print(img)
 
 
 

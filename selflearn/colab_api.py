@@ -38,20 +38,20 @@ driver.get('https://colab.research.google.com/drive/1GPgQZGxFgQp9vJbaLJTp9rB-PEh
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-myElem = WebDriverWait(driver, 7).until(EC.presence_of_element_located((By.ID, ':1x')))
 
 
 print(driver.title)
 # ctrl-F9 # run cell # command="runall"
+# myElem = WebDriverWait(driver, 7).until(EC.presence_of_element_located((By.ID, ':1w')))
+# document.getElementById(":1w").click()
 # driver.find_element_by_xpath("command='runall'").click() #this is from 1
-
-# document.getElementById(":1v").click()
+WebDriverWait(driver, 7).until(EC.presence_of_element_located((By.XPATH, "(//colab-run-button)[1]")))
 setup='''
 document.getElementsByTagName("colab-run-button")[0].click()
 '''
 # driver.execute_script(setup)
-driver.find_element_by_xpath("(//colab-run-button)[2]").click() #this is from 1
-WebDriverWait(driver, 60).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
+driver.find_element_by_xpath("(//colab-run-button)[1]").click() #[this] is from 1
+# WebDriverWait(driver, 60).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
 # time.sleep(3)
 
 
@@ -63,16 +63,18 @@ WebDriverWait(driver, 60).until(EC.invisibility_of_element_located((By.CLASS_NAM
 # <paper-dialog role="dialog"
 # #shadow-root (open)
 # usage limits usage-limit
-
-
-time.sleep(3)
-
-
+try:
+    driver.find_element_by_xpath("//div[@class='usage limits usage-limit']")
+except:
+    import sys
+    print("nope",sys.exc_info())
+    # return False
+    print("usage limit? :)")
 
 while True:
     print(driver.title)
     high=input("here: ")
-    WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
+    # WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
 
     looprun='''
     document.getElementsByTagName("colab-run-button")[1].click()
@@ -85,13 +87,12 @@ while True:
     driver.execute_script(script, node, '# '+high)
 
     # WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'cell-execution focused animating running'))) # code-has-output
-    WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
-    time.sleep(7)
-
+    # WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CLASS_NAME, 'running')))
+    WebDriverWait(driver, 7).until(EC.presence_of_element_located((By.XPATH, "//div[@class='outputview']/iframe")))
     # document.getElementsByClassName('output_subarea output_image').item(0).children[0].src #only if clicked within iframe
     iframe=driver.find_element_by_xpath("//div[@class='outputview']/iframe")
     driver.switch_to.frame(iframe)
-    wait = WebDriverWait(driver, 1)
+    WebDriverWait(driver, 7).until(EC.presence_of_element_located((By.XPATH, "//div[@class='output_subarea output_image']/img")))
     # WebDriverWait(driver, 20).until(EC.frame_to_be_available_and_switch_to_it((By.XPATH,"//iframe[@id='textarea-WYSIWYG_ifr']")))
     # WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//body[@id='tinymce' and @class='mce-content-body']/p"))).send_keys("anynaynanya")
     # img=document.getElementsByClassName("output_subarea output_image").item(0).children[0].src
@@ -99,10 +100,6 @@ while True:
     print(img[:50])
 
     driver.switch_to.default_content()
-
-
-    # import sys
-    # print("nope",sys.exc_info())
 
 
 

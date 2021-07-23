@@ -7,6 +7,6 @@ grpcio-tools
 gym
 keras
 numpy
-tensorflow==2.4.1
+tensorflow==2.4.2
 tensorflow_addons
 tensorflow_probability==0.11.0

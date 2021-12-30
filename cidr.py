@@ -33,7 +33,8 @@ def getcidr(df): # get cidr list
     import numpy as np
     iplr = np.array(df.to_numpy())
     iprng = np.vectorize(cidr)(iplr[:,0],iplr[:,1])
-    iprng = np.core.defchararray.add(iprng,",")
+    # iprng = np.core.defchararray.add(iprng,",")
+    iprng = np.core.char.add(iprng,",")
     # print(iprng)
     # for i in iprng: print(i)
     iprange = pd.DataFrame(iprng)

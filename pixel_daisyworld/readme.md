@@ -1,59 +1,26 @@
-**Status:** Stable release
 
-[![Colab](https://img.shields.io/pypi/v/dreamerv2.svg)](https://pypi.python.org/pypi/dreamerv2/#history)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eisbetterthanpi/python/pixel_daisyworld/blob/master/pixel_daisyworld.ipynb)
 
-# pixel daiseyworld
-
-### hi hi
-
-- basic usage of stylegan3, generate_images() taking size (1,512) numpy array
-
-#### [Open `PPO_colab.ipynb` in Google Colab](https://colab.research.google.com/github/eisbetterthanpi/python/pixel_daisyworld/blob/master/pixel_daisyworld.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eisbetterthanpi/python/pixel_daisyworld/blob/master/pixel_daisyworld.ipynb)
-
+# pixel daisyworld
+Pixel daisyworld is an extension of Daisyworld simulation, a model of an imaginary planet
+Lovelock and Andrew Watson to support the Gaia theory
 
 # Mastering Atari with Discrete World Models
 
-Implementation of the [DreamerV2][website] agent in TensorFlow 2. Training
-curves for all 55 games are included.
+Implementation of the [pixel][website] yaya
 
 <p align="center">
-<img width="90%" src="https://imgur.com/gO1rvEn.gif">
+<!-- <img width="90%" src="https://imgur.com/gO1rvEn.gif"> -->
 </p>
 
-If you find this code useful, please reference in your paper:
-
-```
-@article{hafner2020dreamerv2,
-  title={Mastering Atari with Discrete World Models},
-  author={Hafner, Danijar and Lillicrap, Timothy and Norouzi, Mohammad and Ba, Jimmy},
-  journal={arXiv preprint arXiv:2010.02193},
-  year={2020}
-}
-```
-
-[website]: https://danijar.com/dreamerv2
-
-## Method
-
-DreamerV2 is the first world model agent that achieves human-level performance
-on the Atari benchmark. DreamerV2 also outperforms the final performance of the
-top model-free agents
-
-![World Model Learning](https://colab.research.google.com/github/eisbetterthanpi/python/pixel_daisyworld/blob/master/Awb400.mp4)
-
-DreamerV2 learns a model of the environment directly from high-dimensional
-input images. For this, it predicts ahead using compact learned
-
-![Actor Critic Learning](https://imgur.com/wH9kJ2O.png)
-
-DreamerV2 learns actor and critic networks from imagined trajectories of latent
-states. The trajectories start at encoded states of previously encountered
-sequences. The world model then predicts ahead using the selected actions and
+![Alt Text](data/Awb400.gif)
+![Alt Text](data/Tl400.gif)
 
 
-For more information:
+If you find this code useful, please credit `eisbetterthanpi`
 
-- [Google AI Blog post](https://ai.googleblog.com/2021/02/mastering-atari-with-discrete-world.html)
+[website]: https://github.com/eisbetterthanpi
+
 
 ## Using the Package
 
@@ -64,58 +31,38 @@ trains DreamerV2 on the MiniGrid environment:
 
 ```python
 import gym
-import gym_minigrid
-import dreamerv2.api as dv2
-
-env = gym.make('MiniGrid-DoorKey-6x6-v0')
+import gym_minigri
 env = gym_minigrid.wrappers.RGBImgPartialObsWrapper(env)
 dv2.train(env, config)
 ```
 
 ## Manual Instructions
 
-To modify the DreamerV2 agent, clone the repository and follow the instructions
-below. There is also a Dockerfile available, in case you do not want to install
-the dependencies on your system.
+Gaia theory
+Actively regulated
+Atmosphere constant
+Destabalisation life environment interactions lead to local reset
+How much life affect the environment vs natural processes
 
-Get dependencies:
-
-```sh
-pip3 install tensorflow==2.6.0 tensorflow_probability ruamel.yaml 'gym[atari]' dm_control
-```
-
-
-## Docker Instructions
-
-The [Dockerfile](https://github.com/danijar/dreamerv2/blob/main/Dockerfile)
-lets you run DreamerV2 without installing its dependencies in your system. This
-requires you to have Docker with GPU access set up.
-
-Check your setup:
-
-```sh
-docker run -it --rm --gpus all tensorflow/tensorflow:2.4.2-gpu nvidia-smi
-```
-
-Train on Atari:
-
-```sh
-docker build -t dreamerv2 .
-docker run -it --rm --gpus all -v ~/logdir:/logdir dreamerv2 \
-  python3 dreamerv2/train.py --logdir /logdir/atari_pong/dreamerv2/1 \
-    --configs atari --task atari_pong
-```
+https://www.brookes.ac.uk/geoversity/publications/an-analysis-of-the-impact-of-the-gaia-theory-on-ecology-and-evolutionary-theory
+increased biodiversity and increasing stability of populations
 
 
-## Tips
+#### [Open `pixel_daisyworld.ipynb` in Google Colab](pixel_daisyworld.ipynb)
 
-- **Efficient debugging.** You can use the `debug` config as in `--configs
-atari debug`. This reduces the batch size, increases the evaluation
-frequency, and disables `tf.function` graph compilation for easy line-by-line
-debugging.
 
-- **Infinite gradient norms.** This is normal and described under loss scaling in
-the [mixed precision][mixed] guide. You can disable mixed precision by passing
+## Observations
+At high luminosities,
+Large patches of black die and get splitup
+Black surrounded by white survives
+White takeover at high temp	but black dun at low prob bec unsymmetric albedo
+Great heat death is due to expansion of ground cover
+Black starts dying from the center of large patches of black
+
+
+## Future work
+Importance of atmosphere in the simulation
+- Ocean conveyor belt disruption [mixed precision][mixed] guide. You can disable mixed precision by passing
 `--precision 32` to the training script. Mixed precision is faster but can in
 principle cause numerical instabilities.
 

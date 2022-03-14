@@ -8,7 +8,7 @@
 
 - basic usage of stylegan3, generate_images() taking size (1,512) numpy array
 
-#### [Open `PPO_colab.ipynb` in Google Colab](https://colab.research.google.com/github/eisbetterthanpi/stylegan/blob/master/stylegan3_base.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eisbetterthanpi/stylegan/blob/master/stylegan3_base.ipynb)
+#### [Open `PPO_colab.ipynb` in Google Colab](https://colab.research.google.com/github/eisbetterthanpi/python/pixel_daisyworld/blob/master/pixel_daisyworld.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eisbetterthanpi/python/pixel_daisyworld/blob/master/pixel_daisyworld.ipynb)
 
 
 # Mastering Atari with Discrete World Models
@@ -39,7 +39,7 @@ DreamerV2 is the first world model agent that achieves human-level performance
 on the Atari benchmark. DreamerV2 also outperforms the final performance of the
 top model-free agents
 
-![World Model Learning](https://imgur.com/GRC9QAw.png)
+![World Model Learning](https://colab.research.google.com/github/eisbetterthanpi/python/pixel_daisyworld/blob/master/Awb400.mp4)
 
 DreamerV2 learns a model of the environment directly from high-dimensional
 input images. For this, it predicts ahead using compact learned

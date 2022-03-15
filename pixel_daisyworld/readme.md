@@ -12,12 +12,26 @@ Implementation of the [pixel][website] yaya
 <p align="center">
 <!-- <img width="90%" src="https://imgur.com/gO1rvEn.gif"> -->
 </p>
+<div class="row">
+  <img width="50%" src="data/Awb400.gif"/><img width="50%" src="data/Tl400.gif"/>
+</div>
+(left) plot of black and white daisies over area.
+yellow: white daisy, grey: ground, dark blue: black daisy
 
-![Alt Text](data/Awb400.gif)
-![Alt Text](data/Tl400.gif)
+(right) plot of temperature over area, 240K to 360K
+brighter colour is hotter
 
-![Alt Text](data/area.png)
-![Alt Text](data/temp.png)
+<!-- ![Alt Text](data/Awb400.gif) -->
+<div class="row">
+  <img width="50%" src="data/area.png"/><img width="50%" src="data/temp.png"/>
+</div>
+(left) average temperature of the environment
+(right) average temperature of black/ white daisies and ground
+
+black and white dasies have the same growth curve
+temperature of environment is blur
+temperature of daisy= temperature of environment + local temperature on daisy
+
 
 If you find this code useful, please credit `eisbetterthanpi`
 
@@ -44,10 +58,10 @@ At high luminosities,
 - White takeover at high temp	but black dun at low prob bec unsymmetric albedo
 - Great heat death is due to expansion of ground cover
 - Black starts dying from the center of large patches of black
-
+and the inverse at low luminosities
 
 ## Future work
-Importance of atmosphere in the simulation
+- atmosphere/ depth and convection
 - Ocean conveyor belt disruption
 - real growth temp curve
 - spherical coordinate pixels

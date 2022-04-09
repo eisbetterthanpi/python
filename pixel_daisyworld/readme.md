@@ -1,5 +1,5 @@
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eisbetterthanpi/python/pixel_daisyworld/blob/master/pixel_daisyworld.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eisbetterthanpi/python/blob/master/pixel_daisyworld/pixel_daisyworld.ipynb)
 
 # pixel daisyworld
 Pixel daisyworld is an extension of Daisyworld simulation
@@ -48,7 +48,7 @@ How much life affect the environment vs natural processes
 https://www.brookes.ac.uk/geoversity/publications/an-analysis-of-the-impact-of-the-gaia-theory-on-ecology-and-evolutionary-theory
 increased biodiversity and increasing stability of populations
 
-#### [Open `pixel_daisyworld.ipynb` in Google Colab](pixel_daisyworld.ipynb)
+#### [Open `pixel_daisyworld.ipynb` in Google Colab](https://colab.research.google.com/github/eisbetterthanpi/python/blob/master/pixel_daisyworld/pixel_daisyworld.ipynb)
 
 
 ## Observations

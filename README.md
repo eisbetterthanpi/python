@@ -1,6 +1,7 @@
 # python
+miscellaneous simple python scripts
 
-# Table of Contents
+### Table of Contents
 3. [4json.py](#4json.py)
 3. [6174.py](#6174.py)
 3. [CCC.py](#ccc.py)
